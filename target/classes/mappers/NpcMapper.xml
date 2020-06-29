@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace ="org.kpu.LostArk.mappers.NpcMapper">
+
+<insert id="insert">
+	insert into lostark_npc values (#{NPC_name}, #{nomal}, #{interest},#{friendship},#{turst},#{NPC_region},#{writer})
+</insert>
+
+<select id="selectByNpc" resultType="org.VO.NpcVO">
+	select * from lostark_npc where NPC_name=#{NPC_name}
+</select> 
+
+
+
+<select id="selectAll" resultType="org.VO.NpcVO">
+<![CDATA[select * from lostark_npc]]>
+</select>
+
+
+<update id="update">
+	update lostark_npc set nomal=#{nomal}, interest=#{interest}, friendship=#{friendship}, turst=#{turst}, NPC_region=#{NPC_region}, writer=#{writer} where NPC_name=#{NPC_name}
+</update>
+
+<delete id="delete">
+	delete from lostark_npc where NPC_name=#{NPC_name}
+</delete>
+
+
+
+ <select id="IsCheck" resultType="org.VO.NpcVO"> <!-- 회원가입시 아이디 중복확인 -->
+	Select NPC_name from lostark_npc where NPC_name=#{name}
+</select> 
+
+
+<!--
+<insert id="replyinsert">
+	insert into from aop_reply values(#{content});
+</insert>
+
+<update id="reply">
+	update aop_reply set content=#{content}
+</update>
+
+<select id="replyselectAll" resultType="org.VO.NpcVO">
+<![CDATA[select * from aop_reply]]>
+</select>
+-->
+<select id="search" resultType="org.VO.NpcVO">
+	<![CDATA[select * from lostark_npc where NPC_name like #{search}]]>
+	
+</select>
+
+
+</mapper>
