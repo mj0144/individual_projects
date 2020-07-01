@@ -1,5 +1,7 @@
 package org.Service;
 
+import java.util.Map;
+
 import org.DAO.MemberDAO;
 import org.VO.MemberVO;
 import org.VO.NpcVO;
@@ -24,14 +26,16 @@ public class MemberServiceImpl implements MemberService {
 		return vo;
 	}
 	
-
+	//글 작성시, 회원의 작성게시물 수 증가. 
 	public MemberVO readMember(String id) throws Exception{
 		return memberDAO.read(id);
 	}
 	
-	public void updateMember(MemberVO member, int add) throws Exception{
-		memberDAO.update(member, add);
+	
+	public void updateMember(MemberVO vo, boolean add) throws Exception{
+		memberDAO.update(vo, add);
 	}
+	
 	
 	
 	

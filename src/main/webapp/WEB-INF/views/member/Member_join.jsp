@@ -91,7 +91,7 @@ $(document).ready(function() {
 	 var query = {id : $("#id").val()};
 	 
 	 $.ajax({
-	  url : "/member/idCheck",
+	  url : "${pageContext.request.contextPath}/member/idCheck",
 	  type : "post",
 	  data : query,
 	  success : function(data) {

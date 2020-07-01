@@ -17,8 +17,8 @@ public class NpcServiceImpl implements NpcService {
 	private NpcDAO npcDAO;
 	
 	
-	public NpcVO readNpc(String id) throws Exception{
-		return npcDAO.read(id);
+	public NpcVO readNpc(int npc_num) throws Exception{
+		return npcDAO.read(npc_num);
 	}
 	public void addNpc(NpcVO npc) throws Exception{
 		npcDAO.add(npc);
@@ -39,8 +39,8 @@ public class NpcServiceImpl implements NpcService {
 		return vo;
 	}
 
-	public void deleteNpc(NpcVO npc) throws Exception{
-		npcDAO.delete(npc);
+	public void deleteNpc(int npc_num) throws Exception{
+		npcDAO.delete(npc_num);
 	}
 	
 	

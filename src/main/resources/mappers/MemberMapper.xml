@@ -5,38 +5,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace ="org.kpu.LostArk.mappers.MemberMapper">
 
-
-<insert id="join"> <!-- 가입 -->
-	insert into lostark_member values (#{id}, #{passwd}, #{nickname}, #{server}, #{post_count})
+ <!-- 가입 -->
+<insert id="join" parameterType="mem">
+	insert into loa_member (id, passwd, nickname, server) 
+	values (#{id}, #{passwd}, #{nickname}, #{server})
 </insert>
 
-<!-- <select id="login">
-	select * from aop_member where id=#{id} 
-</select> -->
 
- <select id="JoinCheck" resultType="org.VO.MemberVO"> <!-- 회원가입시 아이디 중복확인 -->
-	Select id from lostark_member where id=#{id}
+<!-- 회원가입시 아이디 중복확인 -->
+ <select id="JoinCheck" resultType="mem" parameterType="mem"> 
+	select id from loa_member where id=#{id}
 </select> 
 
-<select id="loginById" resultType="org.VO.MemberVO"> <!-- 로그인시 확인. -->
+<!-- 로그인시 확인. -->
+<select id="loginById" resultType="mem"> 
 	<![CDATA[
-		select * from lostark_member where id=#{id} AND passwd=#{passwd} AND server=#{server}
+		select * from loa_member where id=#{id} AND passwd=#{passwd} AND server=#{server}
 	]]>
 </select>
 
-<select id="selectByMember" resultType="org.VO.MemberVO">
-	select * from lostark_member where id=#{id}
+<select id="selectByMember" resultType="mem">
+	select * from loa_member where id=#{id}
 </select> 
 
 
 
-<update id="addupdate">
-	<![CDATA[update lostark_member set post_count=#{post_count}+1 where id=#{id}
-	]]>
+<!-- 게시글 카운팅  -->
+<update id="addupdate" parameterType="mem">
+	update loa_member set post_count=#{post_count}+1 where id=#{id}
 </update>
-<update id="deupdate">
-	<![CDATA[update lostark_member set post_count=#{post_count}-1 where id=#{id}
-	]]>
+<update id="deupdate" parameterType="mem">
+	update loa_member set post_count=#{post_count}-1 where id=#{id}
 </update>
 
 

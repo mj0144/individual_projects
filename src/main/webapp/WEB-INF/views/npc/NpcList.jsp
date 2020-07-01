@@ -51,12 +51,12 @@
 			    <td><c:out value="${npc.NPC_region}"/></td>
 	 		    <td><c:out value="${npc.writer}"/></td>			 		    	    
 			    <td>	
-			       <c:url value="/npc/read?id=${npc.NPC_name}" var="url" /><a href="${url}">정보 보기</a><br>
+			       <c:url value="/npc/read?npc_num=${npc.npc_num}" var="url" /><a href="${url}">정보 보기</a><br>
 			       	
 			       	<!-- 작성자와 로그인 id가 같아야 수정, 삭제 버튼 생성. -->
 					  <c:if test="${member.id == npc.writer}">				 			  
-						<c:url value="/npc/modify?id=${npc.NPC_name}" var="url"/><a href="${url}">수정하기</a><br>		 			  				 
-				      <c:url value="/npc/delete?id=${npc.NPC_name}" var="url"/><a href="${url}">삭제하기</a><br>
+						<c:url value="/npc/modify?npc_num=${npc.npc_num}" var="url"/><a href="${url}">수정하기</a><br>		 			  				 
+				      <c:url value="/npc/delete?npc_num=${npc.npc_num}" var="url"/><a href="${url}">삭제하기</a><br>
 				      </c:if>			      
 			    </td>
 			  </tr>

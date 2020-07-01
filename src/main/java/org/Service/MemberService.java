@@ -1,5 +1,7 @@
 package org.Service;
 
+import java.util.Map;
+
 import org.VO.MemberVO;
 
 public interface MemberService {
@@ -7,5 +9,5 @@ public interface MemberService {
 	public MemberVO login(MemberVO vo) throws Exception;
 	public MemberVO IdCheck(String id) throws Exception;
 	public MemberVO readMember(String id) throws Exception;
-	public void updateMember(MemberVO member, int add) throws Exception;
+	public void updateMember(MemberVO vo, boolean add) throws Exception;
 }

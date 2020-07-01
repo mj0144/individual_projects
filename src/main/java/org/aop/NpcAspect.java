@@ -20,7 +20,7 @@ public class NpcAspect {
 		String NPC_name = vo.getNPC_name();
 		String NPC_region = vo.getNPC_region();
 	
-        if(NPC_name == "" || NPC_region =="") { //빈칸 확인
+        if(NPC_name == " " || NPC_region ==" ") { //빈칸 확인
             return "redirect:/npc/register";
         }
             Object result = joinPoint.proceed();

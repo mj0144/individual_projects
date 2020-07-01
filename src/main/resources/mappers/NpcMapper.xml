@@ -6,33 +6,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace ="org.kpu.LostArk.mappers.NpcMapper">
 
-<insert id="insert">
-	insert into lostark_npc values (#{NPC_name}, #{nomal}, #{interest},#{friendship},#{turst},#{NPC_region},#{writer})
+<!-- 게시글 등록 -->
+<insert id="insert" parameterType="npc">
+	insert into loa_npc (NPC_name, nomal, interest, friendship, turst, NPC_region, writer) values (#{NPC_name}, #{nomal}, #{interest},#{friendship},#{turst},#{NPC_region},#{writer})
 </insert>
 
-<select id="selectByNpc" resultType="org.VO.NpcVO">
-	select * from lostark_npc where NPC_name=#{NPC_name}
+
+<select id="selectByNpc" resultType="npc">
+	select * from loa_npc where npc_num=#{npc_num}
 </select> 
 
 
 
-<select id="selectAll" resultType="org.VO.NpcVO">
-<![CDATA[select * from lostark_npc]]>
+<select id="selectAll" resultType="npc">
+<![CDATA[select * from loa_npc]]>
 </select>
 
 
-<update id="update">
-	update lostark_npc set nomal=#{nomal}, interest=#{interest}, friendship=#{friendship}, turst=#{turst}, NPC_region=#{NPC_region}, writer=#{writer} where NPC_name=#{NPC_name}
+<update id="update" parameterType="npc">
+	update loa_npc set nomal=#{nomal}, interest=#{interest}, friendship=#{friendship}, turst=#{turst}, NPC_region=#{NPC_region}, writer=#{writer} where npc_num=#{npc_num}
 </update>
 
 <delete id="delete">
-	delete from lostark_npc where NPC_name=#{NPC_name}
+	delete from loa_npc where npc_num=#{npc_num}
 </delete>
 
 
 
  <select id="IsCheck" resultType="org.VO.NpcVO"> <!-- 회원가입시 아이디 중복확인 -->
-	Select NPC_name from lostark_npc where NPC_name=#{name}
+	Select NPC_name from loa_npc where NPC_name=#{name}
 </select> 
 
 
@@ -50,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 -->
 <select id="search" resultType="org.VO.NpcVO">
-	<![CDATA[select * from lostark_npc where NPC_name like #{search}]]>
+	<![CDATA[select * from loa_npc where NPC_name like #{search}]]>
 	
 </select>
 

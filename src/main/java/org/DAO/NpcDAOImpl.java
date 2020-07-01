@@ -20,8 +20,8 @@ public class NpcDAOImpl implements NpcDAO {
 
 	
 	
-	public NpcVO read(String id)throws Exception{
-		NpcVO vo = sqlSession.selectOne(namespace+".selectByNpc", id);
+	public NpcVO read(int npc_num)throws Exception{
+		NpcVO vo = sqlSession.selectOne(namespace+".selectByNpc", npc_num);
 		return vo;
 	}
 	
@@ -35,12 +35,12 @@ public class NpcDAOImpl implements NpcDAO {
 		sqlSession.insert(namespace+".insert", vo);
 		
 	}
-	public void delete(NpcVO vo) throws Exception{
-		sqlSession.insert(namespace+".delete", vo);
+	public void delete(int npc_num) throws Exception{
+		sqlSession.delete(namespace+".delete", npc_num);
 		
 	}
-	public void update(NpcVO vo) throws Exception{
-		sqlSession.insert(namespace+".update", vo);
+	public void update(NpcVO npc) throws Exception{
+		sqlSession.update(namespace+".update", npc);
 		
 	}
 

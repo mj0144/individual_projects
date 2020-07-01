@@ -12,7 +12,7 @@
 <body id="back">
 	<div align=center>
 		<h2><header>npc 정보 등록</header></h2>
-		<form name=form1 action="http://localhost:8080/npc/register/" method="post">
+		<form name=form1 action="register" method="post">
 		<table class="type11">	
 			<tr><th>NPC_name</th><td><input type="text" name="NPC_name" id="NPC_name"autofocus placeholder="공백없이 입력하세요"></td></tr>
 			<tr><th>nomal</th><td><input type="text" name="nomal" ></td></tr>
@@ -20,8 +20,9 @@
 			<tr><th>friendship</th><td><input type="text" name="friendship"></td></tr>
 			<tr><th>turst</th><td><input type="text" name="turst"></td></tr>
 			<tr><th>NPC_region</th><td><input type="text" name="NPC_region" placeholder="공백없이 입력하세요"></td></tr>	
-			<input type="hidden" name="writer" value="${member.id}"></td></tr>
-			<input type="hidden" name="post_count" value="${member.post_count}">
+			<input type="hidden" name="writer" value="${sessionScope.member.id}"></td></tr>
+			아이디 : ${sessionScope.member.id}
+			<%-- <input type="hidden" name="post_count" value="${sessionScope.member.post_count}"> --%>
 		</table>
 		<dl>
 			<button type="button" class="nameCheck">NPC 이름 중복 확인</button>

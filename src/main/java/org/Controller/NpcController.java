@@ -1,6 +1,8 @@
 package org.Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,8 +51,8 @@ public class NpcController {
 	
 	//게시글 정보보기
     @RequestMapping(value = {"/npc/read"}, method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
-    public String readMember(@RequestParam("id") String id, Model model) throws Exception {
-    	NpcVO npc = npcService.readNpc(id);
+    public String readMember(@RequestParam("npc_num") int npc_num, Model model) throws Exception {
+    	NpcVO npc = npcService.readNpc(npc_num);
     	
         model.addAttribute("npc", npc);
         return "npc/Npc_read";   
@@ -69,15 +71,24 @@ public class NpcController {
 	///여기서 aop 사용해서 npc_name이랑 npc_register 빈칸 있는지 확인
 	@Transactional(propagation=Propagation.REQUIRED, timeout=10)
     @RequestMapping(value = {"/npc/register"}, method = RequestMethod.POST)
-	public String createMemberPost(@ModelAttribute("npc") NpcVO vo, @RequestParam("writer") String writer /*@RequestParam("post_count") int post_count*/) throws Exception {
-    	npcService.addNpc(vo);
-
-    	//글 등록하면, 회원정보 post_count 증가.    	
-    	MemberVO member = memberService.readMember(writer);
+	public String createMemberPost(NpcVO nvo, HttpServletRequest request) throws Exception {
     	
-    	int add= 5;
-    	memberService.updateMember(member, add);
-
+		//게시글 등록.
+		npcService.addNpc(nvo);
+    	
+    	//게시글 등록 시, 유저의 post-count증가   	
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("member");
+		memberService.updateMember(vo, true);
+//    	Map<String, Integer> post_counting = new HashMap<String, Integer>();
+//    	System.out.println("작성자 : " + vo.getId());
+//    	System.out.println("게시글 갯수 : " + vo.getPost_count());
+//
+//    	post_counting.put("writer", vo.getId());
+//    	post_counting.put("post_count", vo.getPost_count());
+    	
+    	//memberService.updateMember(post_counting, true);
+    	
     	return "redirect:/npc/list";
 	}
 	
@@ -103,9 +114,9 @@ public class NpcController {
     
     //게시글 수정
     @RequestMapping(value = {"/npc/modify"}, method = RequestMethod.GET)
-    public String modifyMemberGet(@RequestParam("id") String id, Model model) throws Exception {
+    public String modifyMemberGet(@RequestParam("npc_num") int npc_num, Model model) throws Exception {
     	
-    	NpcVO npc = npcService.readNpc(id);
+    	NpcVO npc = npcService.readNpc(npc_num);
     	
         model.addAttribute("npc", npc);     
         return "npc/Npc_modify";
@@ -113,7 +124,8 @@ public class NpcController {
     
     
     @RequestMapping(value = {"/npc/modify"}, method = RequestMethod.POST)
-    public String modifyMemberPost(@ModelAttribute("npc") NpcVO vo) throws Exception {
+    public String modifyMemberPost(NpcVO vo) throws Exception {
+    	
     	npcService.updateNpc(vo);
 
         return "redirect:/npc/list";
@@ -127,20 +139,23 @@ public class NpcController {
     //게시글 삭제.
 	@Transactional(propagation=Propagation.REQUIRED, timeout=10)
     @RequestMapping(value = {"/npc/delete"}, method = RequestMethod.GET)
-    public String deleteMember(@RequestParam("id") String id,  HttpServletRequest request) throws Exception {
-    	NpcVO npc = npcService.readNpc(id);    	
-    	npcService.deleteNpc(npc);
+    public String deleteMember(@RequestParam("npc_num") int npc_num,  HttpServletRequest request) throws Exception {
+  	
+    	npcService.deleteNpc(npc_num);
     	
-    	//글 등록하면, 회원정보 post_count 증가.    	
+    	//글 등록하면, 회원정보 post_count 증가.    
     	HttpSession session = request.getSession();
-    	MemberVO memberid = (MemberVO) session.getAttribute("member");   	
-    	String writer = memberid.getId();
-    	
-    	MemberVO member = memberService.readMember(writer);
-    	int add= 0;
-    	memberService.updateMember(member, add);
-
+    	MemberVO member = (MemberVO) session.getAttribute("member");   	
+//    	Map<String, Integer> post_counting = new HashMap<String, Integer>();
+//    	post_counting.put(member.getId(), member.getPost_count());
+//    	
+//    	memberService.updateMember(post_counting, false);
+    	memberService.updateMember(member, false);
         return "redirect:/npc/list";
     }
+	
+	
+	
+	
 
 }
