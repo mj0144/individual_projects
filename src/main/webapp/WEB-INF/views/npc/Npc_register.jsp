@@ -39,7 +39,7 @@
 	 var query = {NPC_name : $("#NPC_name").val()};
 	 
 	 $.ajax({
-	  url : "/npc/nameCheck",
+	  url : "${pageContext.request.contextPath}/npc/nameCheck",
 	  type : "post",
 	  data : query,
 	  success : function(data) {

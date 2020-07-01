@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/npc")
+
 public class NpcController {
 	private static final Logger logger = LoggerFactory.getLogger(NpcController.class);
 
@@ -38,7 +38,7 @@ public class NpcController {
 
 	
 	//목록 뜨위기
-	@RequestMapping(value = {"/list"}, method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value = {"/npc/list"}, method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
     public String listMember(Model model) throws Exception {
 
     	List<NpcVO> npcs = npcService.readNpcList();
@@ -48,7 +48,7 @@ public class NpcController {
     }
 	
 	//게시글 정보보기
-    @RequestMapping(value = {"/read"}, method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+    @RequestMapping(value = {"/npc/read"}, method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
     public String readMember(@RequestParam("id") String id, Model model) throws Exception {
     	NpcVO npc = npcService.readNpc(id);
     	
@@ -60,7 +60,7 @@ public class NpcController {
     
     
     //게시글 등록
-	@RequestMapping(value = {"/register"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/npc/register"}, method = RequestMethod.GET)
 	public String createMemberGet() throws Exception {
 		return "npc/Npc_register";
 	}
@@ -68,7 +68,7 @@ public class NpcController {
 	
 	///여기서 aop 사용해서 npc_name이랑 npc_register 빈칸 있는지 확인
 	@Transactional(propagation=Propagation.REQUIRED, timeout=10)
-    @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/npc/register"}, method = RequestMethod.POST)
 	public String createMemberPost(@ModelAttribute("npc") NpcVO vo, @RequestParam("writer") String writer /*@RequestParam("post_count") int post_count*/) throws Exception {
     	npcService.addNpc(vo);
 
@@ -84,9 +84,10 @@ public class NpcController {
     
     ///게시글 등록시 NPC_name 이름 중복 방지
     @ResponseBody
-    @RequestMapping(value="/nameCheck", method=RequestMethod.POST)
+    @RequestMapping(value="/npc/nameCheck", method=RequestMethod.POST)
     public int IdCheckPost(HttpServletRequest request) throws Exception{
     	int result=0; //아이디 중복 여부 (1: 중복, 0: 중복안됨)
+    	System.out.println("이름체크");
     	String name=request.getParameter("NPC_name");
    	
     	NpcVO nameCheck = npcService.NameCheck(name);
@@ -101,7 +102,7 @@ public class NpcController {
     
     
     //게시글 수정
-    @RequestMapping(value = {"/modify"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/npc/modify"}, method = RequestMethod.GET)
     public String modifyMemberGet(@RequestParam("id") String id, Model model) throws Exception {
     	
     	NpcVO npc = npcService.readNpc(id);
@@ -111,7 +112,7 @@ public class NpcController {
     }
     
     
-    @RequestMapping(value = {"/modify"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/npc/modify"}, method = RequestMethod.POST)
     public String modifyMemberPost(@ModelAttribute("npc") NpcVO vo) throws Exception {
     	npcService.updateNpc(vo);
 
@@ -125,7 +126,7 @@ public class NpcController {
     
     //게시글 삭제.
 	@Transactional(propagation=Propagation.REQUIRED, timeout=10)
-    @RequestMapping(value = {"/delete"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/npc/delete"}, method = RequestMethod.GET)
     public String deleteMember(@RequestParam("id") String id,  HttpServletRequest request) throws Exception {
     	NpcVO npc = npcService.readNpc(id);    	
     	npcService.deleteNpc(npc);

@@ -1,12 +1,15 @@
 package org.Controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.Service.MemberService;
+import org.Service.NpcService;
 import org.VO.MemberVO;
 import org.VO.NpcVO;
 import org.slf4j.Logger;
@@ -29,7 +32,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private NpcService npcService;
 	
 	//회원가입.
 	@RequestMapping(value = {"/member/join"}, method = RequestMethod.GET)
@@ -74,15 +78,18 @@ public class MemberController {
 	@RequestMapping(value= "/member/login", method=RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes attr, HttpServletRequest requset, HttpServletResponse response) throws Exception{
 		ModelAndView mview = new ModelAndView();
-		System.out.println(member.getId());
 		MemberVO memberVO = memberService.login(member);
 		HttpSession session = requset.getSession();
-		System.out.println("kkk");
+
 	
 		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
 			session.setAttribute("islogin", true);  //로그인 상태.
+			List<NpcVO> npcs = npcService.readNpcList();
+	    	
+			mview.addObject("npcs", npcs);
 			mview.setViewName("npc/NpcList");
+			
 		}else { //실패시 
 			mview.addObject("result", "fail");
 			mview.setViewName("member/Member_login");
