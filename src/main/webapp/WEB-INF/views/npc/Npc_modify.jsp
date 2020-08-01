@@ -28,7 +28,7 @@
 		<dl>
 			<input type="submit" name="submit" value="수정 완료">
 			</dl>
-			<a href="http://localhost:8080/user/npc/list">되돌아가기</a><br><br>
+			<a href="/npc/NpcList">되돌아가기</a><br><br>
 			
 		</form>
 	</div>

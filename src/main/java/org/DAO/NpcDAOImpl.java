@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.VO.MemberVO;
 import org.VO.NpcVO;
+import org.VO.PageVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,11 +26,7 @@ public class NpcDAOImpl implements NpcDAO {
 		return vo;
 	}
 	
-	public List<NpcVO> readList() throws Exception{
-		List<NpcVO> npclist = new ArrayList<NpcVO>();
-		npclist = sqlSession.selectList(namespace + ".selectAll");	
-		return npclist;
-	}
+
 	
 	public void add(NpcVO vo) throws Exception{
 		sqlSession.insert(namespace+".insert", vo);
@@ -45,9 +42,10 @@ public class NpcDAOImpl implements NpcDAO {
 	}
 
 	
-	public NpcVO NameCheck(String name) throws Exception{ //가입시 중복아이디 확인.
-		NpcVO npcvo = sqlSession.selectOne(namespace+".IsCheck", name);
-		return npcvo;
+	//이름 중복확인
+	public int NameCheck(String name) throws Exception{ //가입시 중복아이디 확인.
+		int result = sqlSession.selectOne(namespace+".IsCheck", name);
+		return result;
 	}
 	
 	public List<NpcVO> searchNPC(String search) throws Exception{
@@ -56,5 +54,26 @@ public class NpcDAOImpl implements NpcDAO {
 		npclist= sqlSession.selectList(namespace+".search", search);
 		return npclist;
 	}
+	
+	
+	@Override
+	public List<NpcVO> pageList(PageVO vo) throws Exception {
+		
+		return sqlSession.selectList(namespace+".paging", vo);
+	}
+	
+	
+	@Override
+	public int countPaging(PageVO vo) throws Exception {
+	
+		return sqlSession.selectOne(namespace+".totalcount", vo);
+	}
+
+
+
+
+	
+	
+	
 	
 }

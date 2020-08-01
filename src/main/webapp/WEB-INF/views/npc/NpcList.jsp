@@ -67,12 +67,22 @@
 	</div>
 	<div class="text-center">
 			<ul class="pagination pagination-sm justify-content-center">
-				<li class="page-item active"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
+				<c:if test="${pageMaker.prev }">
+					<li><a href="npc/NpcList?page=${pageMaker.startPage-1 }">&laquo;</a></li>
+				</c:if>
+				
+				<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="i">
+					<li class="page-item" <c:out value="${pageMaker.pagevo.page==i? 'class=active' : '' }"/>>
+						<a class="page-link" href="NpcList?page=${i }">${i }</a>
+					</li>
+				</c:forEach>
+				
+				<c:if test='${pageMaker.next && pageMaker.endPage >0 }'>
+					<li class="page-item"><a class="page-link" href="NpcList?page=${pageMaker.endPage+1 }">&raquo;</a></li>
+				</c:if>
 			</ul>
-	</div>
+		</div>
+				
 	
 		<!-- 로그인 되어 있으면, '로그아웃' 버튼뜨고, 로그인상태가 아니면 '로그인하러 가기'버튼. -->
 			<c:if test="${member.id != null}">				 			  
@@ -83,6 +93,8 @@
 				<c:url value="/member/login" var="url"/><a href="${url}">로그인하러 가기</a><br>
 			</c:if>
 </form>
+
+
 
     
     
@@ -95,9 +107,9 @@
 	        hw.addEventListener('click', function(){
 	        	if(id == ""){
 	    			alert("로그인후 이용해 주세요");           	
-	    			location.href = "http://localhost:8080/user/npc/list";	            	
+	    			location.href = "/npc/NpcList";	            	
 	    			}else{        			
-	    			location.href = "http://localhost:8080/user/npc/register";	
+	    			location.href = "/npc/register";	
 	    			}    
 	    		  })	
    		 </script>

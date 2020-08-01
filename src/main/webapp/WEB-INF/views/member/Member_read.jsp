@@ -20,7 +20,7 @@
 			<tr><th> server </th><td><c:out value="${member.server}"/></td></tr>
 			<tr><th> post_count </th><td><c:out value="${member.post_count}"/></td></tr>
 		</table>
-		<c:url value="/npc/list" var="url"/><a href="${url}">되돌아가기</a>
+		<c:url value="/npc/NpcList" var="url"/><a href="${url}">되돌아가기</a>
 	</div>
 </body>
 </html>

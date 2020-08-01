@@ -5,6 +5,7 @@ import java.util.List;
 import org.DAO.NpcDAO;
 import org.VO.MemberVO;
 import org.VO.NpcVO;
+import org.VO.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -24,9 +25,7 @@ public class NpcServiceImpl implements NpcService {
 		npcDAO.add(npc);
 	}
 	
-	public List<NpcVO> readNpcList() throws Exception{
-		return npcDAO.readList();
-	}
+
 	
 	
 	@Transactional(isolation=Isolation.READ_COMMITTED, timeout=10)
@@ -34,9 +33,8 @@ public class NpcServiceImpl implements NpcService {
 		npcDAO.update(npc);
 	}
 	
-	public NpcVO NameCheck(String name) throws Exception{
-		NpcVO vo = npcDAO.NameCheck(name);
-		return vo;
+	public int NameCheck(String name) throws Exception{
+		return npcDAO.NameCheck(name);
 	}
 
 	public void deleteNpc(int npc_num) throws Exception{
@@ -47,6 +45,21 @@ public class NpcServiceImpl implements NpcService {
 	//리스트 검색.
 	public List<NpcVO> searchNPC(String id) throws Exception{
 		return npcDAO.searchNPC(id);
+	}
+	
+	
+	//페이징처리
+	@Override
+	public List<NpcVO> pageList(PageVO vo) throws Exception {
+		return npcDAO.pageList(vo);
+	}
+	
+	
+	//게시글 전체 갯수
+	@Override
+	public int countPaging(PageVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return npcDAO.countPaging(vo);
 	}
 	
 

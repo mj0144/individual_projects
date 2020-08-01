@@ -28,7 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-
+@RequestMapping("/member/*")
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
@@ -36,48 +36,35 @@ public class MemberController {
 	private NpcService npcService;
 	
 	//회원가입.
-	@RequestMapping(value = {"/member/join"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String joinMemberGet() throws Exception {
 		return "member/Member_join";
 	}
 	
 	
-    @RequestMapping(value = {"/member/join"}, method = RequestMethod.POST)
-	public ModelAndView joinMemberPost(@ModelAttribute("member") MemberVO vo) throws Exception {
-    	System.out.println("rrr");
-    	memberService.memberJoin(vo);
-		ModelAndView mav = new ModelAndView();
-    	mav.setViewName("member/Member_login");  	
-		return mav;
+    @RequestMapping(value = "/join", method = RequestMethod.POST)
+	public String joinMemberPost(@ModelAttribute("member") MemberVO vo) throws Exception {
+    	memberService.memberJoin(vo);	
+		return "member/Member_login";
 	}
     
     
 
     //가입 시 아이디 중복확인.
     @ResponseBody
-    @RequestMapping(value="/member/idCheck", method=RequestMethod.POST)
-    public int IdCheckPost(HttpServletRequest request) throws Exception{
-    	int result=0; //아이디 중복 여부 (1: 중복, 0: 중복안됨)
-    	String id=request.getParameter("id");
-   	
-    	MemberVO idCheck = memberService.IdCheck(id);
-    	   	
-    	if(idCheck != null || id =="") {
-    		result = 1;		//아이디 중복 또는 아이디 입력안했을 시.
-        	}
-    	return result;
+    @RequestMapping(value="/idCheck", method=RequestMethod.POST)
+    public int IdCheckPost(String id) throws Exception{   	
+    	return memberService.IdCheck(id);
     }
     
     //로그인
-    @RequestMapping(value = "/member/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGet() throws Exception {
-    	System.out.println("login");
 		return "member/Member_login";
 	}
 
-	@RequestMapping(value= "/member/login", method=RequestMethod.POST)
-	public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes attr, HttpServletRequest requset, HttpServletResponse response) throws Exception{
-		ModelAndView mview = new ModelAndView();
+	@RequestMapping(value= "/login", method=RequestMethod.POST)
+	public String login(@ModelAttribute("member") MemberVO member, RedirectAttributes attr, HttpServletRequest requset, HttpServletResponse response, Model model) throws Exception{
 		MemberVO memberVO = memberService.login(member);
 		HttpSession session = requset.getSession();
 
@@ -85,37 +72,34 @@ public class MemberController {
 		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
 			session.setAttribute("islogin", true);  //로그인 상태.
-			List<NpcVO> npcs = npcService.readNpcList();
 	    	
-			mview.addObject("npcs", npcs);
-			mview.setViewName("npc/NpcList");
+			return "redirect:/npc/NpcList";
 			
 		}else { //실패시 
-			mview.addObject("result", "fail");
-			mview.setViewName("member/Member_login");
+			model.addAttribute("result", "fail");
+			return "redirect:/member/login"; //앞에 '/'빠지면 안돼.
 		}
-		return mview;
+
 	}
 	
 	
 	
 	
 	//로그아웃
-	@RequestMapping(value= {"/member/logout"}, method=RequestMethod.GET)
-	public ModelAndView logout(HttpServletResponse response, HttpServletRequest request) throws Exception{
+	@RequestMapping(value= "/logout", method=RequestMethod.GET)
+	public String logout(HttpServletRequest request) throws Exception{
 
 		HttpSession session = request.getSession();
-		ModelAndView mview = new ModelAndView();
 
 		session.removeAttribute("member");
 		session.removeAttribute("islogin");
 		
-		mview.setViewName("redirect:/npc/list");
 		
-		return mview;
+		
+		return "redirect:/npc/NpcList";
 	}
 	
-    @RequestMapping(value = {"/member/read"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String readMember(@RequestParam("id") String id, Model model) throws Exception {
     	MemberVO member = memberService.readMember(id);
     	

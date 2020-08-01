@@ -25,9 +25,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	// 아이디 중복 체크
-	public MemberVO IdCheck(String id) throws Exception { // 가입시 중복아이디 확인.
-		MemberVO membervo = sqlSession.selectOne(namespace + ".JoinCheck", id);
-		return membervo;
+	public int IdCheck(String id) throws Exception { // 가입시 중복아이디 확인.
+		return sqlSession.selectOne(namespace + ".idCheck", id);
 	}
 
 	public MemberVO read(String id) throws Exception {

@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <!-- 회원가입시 아이디 중복확인 -->
- <select id="JoinCheck" resultType="mem" parameterType="mem"> 
-	select id from loa_member where id=#{id}
+ <select id="idCheck" resultType="int" parameterType="String"> 
+	select distinct count(id) from loa_member where id=#{id}
 </select> 
 
 <!-- 로그인시 확인. -->

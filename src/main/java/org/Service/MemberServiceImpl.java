@@ -21,9 +21,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.loginById(vo);
 	}
 	
-	public MemberVO IdCheck(String id) throws Exception{
-		MemberVO vo = memberDAO.IdCheck(id);
-		return vo;
+	public int IdCheck(String id) throws Exception{
+		if(id.equals("")) {
+			return 2;
+		}
+		return memberDAO.IdCheck(id);
 	}
 	
 	//글 작성시, 회원의 작성게시물 수 증가. 
