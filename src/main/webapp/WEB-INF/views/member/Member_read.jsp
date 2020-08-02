@@ -15,7 +15,6 @@
 		<h2><header>회원 정보</header></h2>
 		<table class="type11">
 		    <th> id </th><td><c:out value="${member.id}"/></td>
-			<tr><th> passwd </th><td><c:out value="${member.passwd}"/></td></tr>
 			<tr><th> nickname </th><td><c:out value="${member.nickname}"/></td></tr>
 			<tr><th> server </th><td><c:out value="${member.server}"/></td></tr>
 			<tr><th> post_count </th><td><c:out value="${member.post_count}"/></td></tr>

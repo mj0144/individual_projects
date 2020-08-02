@@ -23,10 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 
+<!-- 게시글 수정 -->
 <update id="update" parameterType="npc">
-	update loa_npc set nomal=#{nomal}, interest=#{interest}, friendship=#{friendship}, turst=#{turst}, NPC_region=#{NPC_region}, writer=#{writer} where npc_num=#{npc_num}
+	update loa_npc set NPC_name = #{NPC_name}, nomal=#{nomal}, interest=#{interest}, friendship=#{friendship}, turst=#{turst}, NPC_region=#{NPC_region}, writer=#{writer} where npc_num=#{npc_num}
 </update>
 
+<!-- 게시글 삭제 -->
 <delete id="delete">
 	delete from loa_npc where npc_num=#{npc_num}
 </delete>

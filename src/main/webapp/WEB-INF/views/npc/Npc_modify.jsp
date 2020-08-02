@@ -22,12 +22,15 @@
 			<tr><th>turst</th><td><input type="text" name="turst" value="${npc.turst}"></td></tr>
 			<tr><th>NPC_region</th><td><input type="text" name="NPC_region" value="${npc.NPC_region}"></td></tr>
 			
-			<input type="hidden" name="npc_num" value="${npc.npc_num}"/>
+
 					
 		</table>
-		<dl>
+			<input type="hidden" name="npc_num" value="${npc.npc_num}"/>
+			<input type="hidden" name="page" value="${pagevo.page }"/>
+			<input type="hidden" name="perPageNum" value="${pagevo.perPageNum }">
+			
 			<input type="submit" name="submit" value="수정 완료">
-			</dl>
+			
 			<a href="/npc/NpcList">되돌아가기</a><br><br>
 			
 		</form>

@@ -56,8 +56,8 @@
 			       	
 			       	<!-- 작성자와 로그인 id가 같아야 수정, 삭제 버튼 생성. -->
 					  <c:if test="${member.id == npc.writer}">				 			  
-						<c:url value="/npc/modify?npc_num=${npc.npc_num}" var="url"/><a href="${url}">수정하기</a><br>		 			  				 
-				      <c:url value="/npc/delete?npc_num=${npc.npc_num}" var="url"/><a href="${url}">삭제하기</a><br>
+						<c:url value="/npc/Npc_modify${pageMaker.makeQuery(pageMaker.pagevo.page) }&npc_num=${npc.npc_num}" var="url"/><a href="${url}">수정하기</a><br>		 			  				 
+				      <c:url value="/npc/delete${pageMaker.makeQuery(pageMaker.pagevo.page) }&npc_num=${npc.npc_num}&writer=${npc.writer }" var="url"/><a href="${url}">삭제하기</a><br>
 				      </c:if>			      
 			    </td>
 			  </tr>
@@ -94,8 +94,9 @@
 				<c:if test="${member.id == null}">				 			  
 				<c:url value="/member/login" var="url"/><a href="${url}">로그인하러 가기</a><br>
 			</c:if>
+		
 </form>
-
+<input type="hidden" id="msg" value="${msg }">
 
 
     
@@ -105,7 +106,6 @@
 	   <script type="text/javascript">
 	   var id = $('#id').val();
 	 
-	        var hw = document.getElementById('hw');
 	        hw.addEventListener('click', function(){
 	        	if(id == ""){
 	    			alert("로그인후 이용해 주세요");           	
@@ -115,5 +115,14 @@
 	    			}    
 	    		  })	
    		 </script>
+   		 
+  <script>
+		$(function(){
+			if($('#msg').val() != ''){ 
+				alert($('#msg').val())
+				$('#msg').val('');
+			}
+		})
+  </script>
 	
 </html>

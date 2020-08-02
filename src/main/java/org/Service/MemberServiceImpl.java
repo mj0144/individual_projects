@@ -34,8 +34,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	
-	public void updateMember(MemberVO vo, boolean add) throws Exception{
-		memberDAO.update(vo, add);
+	public void updateMember(String writer, boolean add) throws Exception{
+		memberDAO.update(writer, add);
 	}
 	
 	

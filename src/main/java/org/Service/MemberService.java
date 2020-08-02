@@ -9,5 +9,5 @@ public interface MemberService {
 	public MemberVO login(MemberVO vo) throws Exception;
 	public int IdCheck(String id) throws Exception;
 	public MemberVO readMember(String id) throws Exception;
-	public void updateMember(MemberVO vo, boolean add) throws Exception;
+	public void updateMember(String writer, boolean add) throws Exception;
 }
