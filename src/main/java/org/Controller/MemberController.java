@@ -64,7 +64,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value= "/login", method=RequestMethod.POST)
-	public String login(@ModelAttribute("member") MemberVO member, RedirectAttributes attr, HttpServletRequest requset, HttpServletResponse response, Model model) throws Exception{
+	public String login(@ModelAttribute("member") MemberVO member, 
+			HttpServletRequest requset,
+			Model model) throws Exception{
 		MemberVO memberVO = memberService.login(member);
 		HttpSession session = requset.getSession();
 

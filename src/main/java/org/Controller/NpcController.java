@@ -44,12 +44,12 @@ public class NpcController {
 
 	
 	//게시글 정보보기
-    @RequestMapping(value = "/read", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
-    public String readMember(@RequestParam("npc_num") int npc_num, Model model) throws Exception {
-    	NpcVO npc = npcService.readNpc(npc_num);
-    	
-        model.addAttribute("npc", npc);
-        return "npc/Npc_read";   
+    @RequestMapping(value = "/Npc_read", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+    public void readMember(@RequestParam("npc_num") int npc_num, 
+    		@ModelAttribute("pagevo") PageVO pagevo, 
+    		Model model) throws Exception {
+   	
+        model.addAttribute("npc", npcService.readNpc(npc_num));
     }
     
 

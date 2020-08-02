@@ -51,7 +51,8 @@
 			    <td><c:out value="${npc.NPC_region}"/></td>
 	 		    <td><c:out value="${npc.writer}"/></td>			 		    	    
 			    <td>	
-			       <c:url value="/npc/read?npc_num=${npc.npc_num}" var="url" /><a href="${url}">정보 보기</a><br>
+			      <%--  <c:url value="/npc/read?npc_num=${npc.npc_num}" var="url" /><a href="${url}">정보 보기</a><br> --%>
+			      <a href="/npc/Npc_read${pageMaker.makeQuery(pageMaker.pagevo.page)}&npc_num=${npc.npc_num }">정보보기</a>
 			       	
 			       	<!-- 작성자와 로그인 id가 같아야 수정, 삭제 버튼 생성. -->
 					  <c:if test="${member.id == npc.writer}">				 			  
@@ -68,17 +69,18 @@
 	<div class="text-center">
 			<ul class="pagination pagination-sm justify-content-center">
 				<c:if test="${pageMaker.prev }">
-					<li><a href="npc/NpcList?page=${pageMaker.startPage-1 }">&laquo;</a></li>
+					<%-- <li><a href="npc/NpcList?page=${pageMaker.startPage-1 }">&laquo;</a></li> --%>
+					<li><a href="NpcList${pageMaker.makeQuery(pageMaker.startPage-1) }">&laquo;</a></li>
 				</c:if>
 				
 				<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="i">
 					<li class="page-item" <c:out value="${pageMaker.pagevo.page==i? 'class=active' : '' }"/>>
-						<a class="page-link" href="NpcList?page=${i }">${i }</a>
+						<a class="page-link" href="NpcList${pageMaker.makeQuery(i)}">${i }</a>
 					</li>
 				</c:forEach>
 				
 				<c:if test='${pageMaker.next && pageMaker.endPage >0 }'>
-					<li class="page-item"><a class="page-link" href="NpcList?page=${pageMaker.endPage+1 }">&raquo;</a></li>
+					<li class="page-item"><a class="page-link" href="NpcList${pageMaker.makeQuery(pageMaker.endPage+1) }">&raquo;</a></li>
 				</c:if>
 			</ul>
 		</div>
