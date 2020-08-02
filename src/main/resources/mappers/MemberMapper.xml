@@ -31,11 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <!-- 게시글 카운팅  -->
-<update id="addupdate" parameterType="mem">
-	update loa_member set post_count=#{post_count}+1 where id=#{id}
+<update id="addupdate" parameterType="String">
+	update loa_member set post_count=post_count+1 where id=#{writer}
 </update>
-<update id="deupdate" parameterType="mem">
-	update loa_member set post_count=#{post_count}-1 where id=#{id}
+<update id="deupdate" parameterType="String">
+	update loa_member set post_count=post_count-1 where id=#{writer}
 </update>
 
 

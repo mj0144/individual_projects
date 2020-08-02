@@ -21,7 +21,7 @@
 
 <tr>
 					<c:url value="/member/login" var="url"/><a href="${url}">로그인하러 가기</a><br>		
-					<c:url value="/npc/list" var="url"/><a href="${url}">목록보러 가기</a> 			  				 
+					<c:url value="/npc/NpcList" var="url"/><a href="${url}">목록보러 가기</a> 			  				 
 					 		</tr>	  				 
 
 

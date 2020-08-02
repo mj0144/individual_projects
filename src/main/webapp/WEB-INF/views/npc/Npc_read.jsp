@@ -21,7 +21,8 @@
 			<tr><th> turst </th><td><c:out value="${npc.turst}"/></td></tr>
 			<tr><th> NPC_region </th><td><c:out value="${npc.NPC_region}"/></td></tr>
 		</table>
-		<c:url value="/npc/NpcList" var="url"/><a href="${url}">전체 목록 보기</a>
+		<%-- <c:url value="/npc/NpcList" var="url"/><a href="${url}">전체 목록 보기</a> --%>
+		<a href="/npc/NpcList?page=${pagevo.page }&perPageNum=${pagevo.perPageNum }">전체 목록 보기</a>
 	</div>
 
 </body>

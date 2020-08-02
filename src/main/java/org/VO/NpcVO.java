@@ -2,6 +2,8 @@ package org.VO;
 
 public class NpcVO {
 	private int npc_num;
+	private String NPC_name;
+
 	private String nomal;
 	private String interest;
 	private String friendship;
@@ -17,7 +19,6 @@ public class NpcVO {
 		this.npc_num = npc_num;
 	}
 
-	private String NPC_name;
 
 	public String getWriter() {
 		return writer;

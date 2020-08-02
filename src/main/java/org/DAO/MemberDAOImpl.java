@@ -34,12 +34,13 @@ public class MemberDAOImpl implements MemberDAO {
 		return vo;
 	}
 
-	public void update(MemberVO vo, boolean add) throws Exception {
+	
+	//게시글 삭제, 게시글 등록 시 작성한게시글  수 count
+	public void update(String writer, boolean add) throws Exception {
 		if (add == true) {
-			
-			sqlSession.insert(namespace + ".addupdate", vo);
+			sqlSession.insert(namespace + ".addupdate", writer);
 		} else if (add == false) {
-			sqlSession.insert(namespace + ".deupdate", vo);
+			sqlSession.insert(namespace + ".deupdate", writer);
 		}
 	}
 }

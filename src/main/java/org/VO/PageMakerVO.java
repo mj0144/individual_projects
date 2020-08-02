@@ -1,5 +1,8 @@
 package org.VO;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMakerVO {
 
 	private int totalCount;
@@ -46,6 +49,14 @@ public class PageMakerVO {
 		calcPage();
 	}
 	
+	
+	public String makeQuery(int page) {
+		UriComponents uriComponents= UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("perPageNum", pagevo.getPerPageNum())
+				.build();
+		return uriComponents.toUriString();
+	}
 	
 	
 	public int getTotalCount() {

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/npc/*")
@@ -44,12 +45,12 @@ public class NpcController {
 
 	
 	//게시글 정보보기
-    @RequestMapping(value = "/read", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
-    public String readMember(@RequestParam("npc_num") int npc_num, Model model) throws Exception {
-    	NpcVO npc = npcService.readNpc(npc_num);
-    	
-        model.addAttribute("npc", npc);
-        return "npc/Npc_read";   
+    @RequestMapping(value = "/Npc_read", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+    public void readMember(@RequestParam("npc_num") int npc_num, 
+    		@ModelAttribute("pagevo") PageVO pagevo, 
+    		Model model) throws Exception {
+   	
+        model.addAttribute("npc", npcService.readNpc(npc_num));
     }
     
 
@@ -65,17 +66,15 @@ public class NpcController {
 	///여기서 aop 사용해서 npc_name이랑 npc_register 빈칸 있는지 확인
 	@Transactional(propagation=Propagation.REQUIRED, timeout=10)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String createMemberPost(NpcVO nvo, HttpServletRequest request) throws Exception {
+	public String createMemberPost(NpcVO nvo, HttpServletRequest request, String writer) throws Exception {
     	
 		//게시글 등록.
 		npcService.addNpc(nvo);
     	
     	//게시글 등록 시, 유저의 post-count증가   	
-		HttpSession session = request.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("member");
-		memberService.updateMember(vo, true);
+		memberService.updateMember(writer, true);
     	
-    	return "redirect:/npc/list";
+    	return "redirect:/npc/NpcList";
 	}
 	
     
@@ -90,22 +89,27 @@ public class NpcController {
     
     
     //게시글 수정
-    @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyMemberGet(@RequestParam("npc_num") int npc_num, Model model) throws Exception {
-    	
-    	NpcVO npc = npcService.readNpc(npc_num);
-    	
-        model.addAttribute("npc", npc);     
-        return "npc/Npc_modify";
+    @RequestMapping(value = "/Npc_modify", method = RequestMethod.GET)
+    public void modifyMemberGet(@RequestParam("npc_num") int npc_num,
+    		@ModelAttribute("pagevo") PageVO pagevo,
+    		Model model) throws Exception {
+    		
+        model.addAttribute("npc", npcService.readNpc(npc_num)); 
     }
     
     
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public String modifyMemberPost(NpcVO vo) throws Exception {
+    public String modifyMemberPost(NpcVO vo, 
+    		PageVO pagevo,
+    		RedirectAttributes attr) throws Exception {
     	
     	npcService.updateNpc(vo);
+    	attr.addAttribute("page", pagevo.getPage());
+    	attr.addAttribute("perPageNum", pagevo.getPerPageNum());
+    	attr.addAttribute("msg", "수정되었습니다");
+    	
 
-        return "redirect:/npc/list";
+        return "redirect:/npc/NpcList";
     }
     
 
@@ -116,21 +120,24 @@ public class NpcController {
     //게시글 삭제.
 	@Transactional(propagation=Propagation.REQUIRED, timeout=10)
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String deleteMember(@RequestParam("npc_num") int npc_num,  HttpServletRequest request) throws Exception {
+    public String deleteMember(@RequestParam("npc_num") int npc_num,
+    		PageVO pagevo,
+    		String writer,
+    		RedirectAttributes attr) throws Exception {
   	
     	npcService.deleteNpc(npc_num);
+    	//게시글 작성 수 -1
+    	memberService.updateMember(writer, false);
+    	attr.addAttribute("page", pagevo.getPage());
+    	attr.addAttribute("perPageNum", pagevo.getPerPageNum());
+    	attr.addAttribute("msg", "삭제되었습니다");
     	
-    	//글 등록하면, 회원정보 post_count 증가.    
-    	HttpSession session = request.getSession();
-    	MemberVO member = (MemberVO) session.getAttribute("member");   	
-
-    	memberService.updateMember(member, false);
-        return "redirect:/npc/list";
+        return "redirect:/npc/NpcList";
     }
 	
 	
 	@RequestMapping(value= "/NpcList", method=RequestMethod.GET)
-	public void listPage(@ModelAttribute("pagevo")PageVO pagevo, Model model) throws Exception{
+	public void listPage(@ModelAttribute("pagevo")PageVO pagevo, Model model, String msg) throws Exception{
 		PageMakerVO maker = new PageMakerVO();
 			
 		maker.setPagevo(pagevo);
@@ -140,6 +147,7 @@ public class NpcController {
 		
 		model.addAttribute("npcs", npcs);
 		model.addAttribute("pageMaker", maker);
+		model.addAttribute("msg", msg);
 		
 	}
 	
