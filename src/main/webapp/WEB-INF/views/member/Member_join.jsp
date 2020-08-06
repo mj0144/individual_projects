@@ -19,7 +19,7 @@
 	<div align=center>
 		<h2><header>회원가입</header></h2>
 		
-		<form name=form1 method="post" action="member/join">
+		<form name=form1 method="post" action="/member/join" id="form1">
 			<table class="type11">	
 				<tr><th>아이디</th><td><input type="text" name="id" id="id" autofocus placeholder="아이디를 입력하세요">
 				<input type="button" id="idCheck" value="중복확인"/>
@@ -46,7 +46,7 @@
 				</td></tr>
 			</table>
 		
-					<input type="button" id="submit" value="완료">
+					<input type="button" id="commit" value="완료"/>
 					<input type="reset" id="reset" value="다시 작성">	
 
 		</form>
@@ -93,7 +93,7 @@
 	})
 	
 	
-	$('#submit').click(function(){
+/* 	$('#commit').click(function(){
 		if(idchk === true){
 			$('#submit').submit();
 		}else {
@@ -101,7 +101,18 @@
 			$('#label').attr('style', 'color:red')
 		}
 		
-	}) 
+	})  */
+	
+	   commit.addEventListener('click', function(){
+		  if(idchk === true){
+				$('#form1').submit()
+			}else {
+				$('#label').text('아이디 중복체크를 해주세요')
+				$('#label').attr('style', 'color:red')
+			}   
+	    })	 
+
+
 	
 </script>
 

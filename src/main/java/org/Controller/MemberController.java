@@ -59,7 +59,9 @@ public class MemberController {
     
     //로그인
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginGet() throws Exception {
+	public String loginGet(String msg, Model model) throws Exception {
+    	model.addAttribute("msg", msg);
+
 		return "member/Member_login";
 	}
 
@@ -88,17 +90,17 @@ public class MemberController {
 	
 	
 	//로그아웃
-	@RequestMapping(value= "/logout", method=RequestMethod.GET)
-	public String logout(HttpServletRequest request) throws Exception{
+	@RequestMapping(value= "/logout", method=RequestMethod.POST)
+	public String logout(HttpServletRequest request, RedirectAttributes rt) throws Exception{
 
-		HttpSession session = request.getSession();
+/*		HttpSession session = request.getSession();
 
 		session.removeAttribute("member");
-		session.removeAttribute("islogin");
+		session.removeAttribute("islogin");*/
 		
+		rt.addAttribute("msg", "로그아웃되었습니다");
 		
-		
-		return "redirect:/npc/NpcList";
+		return "redirect:/member/login";
 	}
 	
     @RequestMapping(value = "/read", method = RequestMethod.GET)

@@ -1,7 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    
+    <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
+
+<%
+     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    Object principal = auth.getPrincipal(); //사용자 정보를 가져옴.
+    										//인증하지 않은 상태이면 anonymousUser 반환
+    										//인증이 된 상태이면 로그인한 사용자의 정보가 담긴 Object 객체 return
+    String name = "";
+    if(principal != null) {
+        name = auth.getName();
+    } 
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +33,16 @@
 <script type="text/javascript" src="../resources/js/bootstrap.js"></script>
 
 
+<!-- isAnonymous()는 익명사용자, isAuthenticated()는 인증한 사용자 -->
+<sec:authorize access="isAuthenticated()">
+
+
 <form name="form2">
 	<div align=center class="container">
 		<h1><header>NPC 목록</header></h1><br>
 		
 		
-
+    <h5><%=name %>님, 반갑습니다.</h5>
     <input type="button" id="hw" value="등록하기" class="btn btn-default"/>	
 	<input type="hidden" id="id" value='${member.id}'/>
 <!-- <table class="type11"> -->
@@ -87,15 +106,42 @@
 				
 	
 		<!-- 로그인 되어 있으면, '로그아웃' 버튼뜨고, 로그인상태가 아니면 '로그인하러 가기'버튼. -->
-			<c:if test="${member.id != null}">				 			  
+			<%-- <c:if test="${member.id != null}">				 			  
 				<c:url value="/member/logout" var="url"/><a href="${url}">로그아웃</a><br>
+				<a href="/member/logout" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
+				<form id="logout-form" action='<c:url value='/member/logout'/>' method="POST">
+				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+				</form>
 			       <c:url value="/member/read?id=${member.id}" var="url" /><a href="${url}">나의 정보 보기</a><br>
 			</c:if>
 				<c:if test="${member.id == null}">				 			  
 				<c:url value="/member/login" var="url"/><a href="${url}">로그인하러 가기</a><br>
-			</c:if>
+			</c:if> --%>
+			<sec:authorize access="isAnonymous()">
+			   <a href="/member/login">로그인</a>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+			   <a href="/member/logout" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
+				<form id="logout-form" action='<c:url value='/member/logout'/>' method="POST">
+				<!-- csrf token 인증 -->
+				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+				</form>
+			   <p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
+			</sec:authorize> 
+			
+			<%-- <sec:authorize access="isAuthenticated()">
+			   <a href="<c:url value='/member/login'/>">로그아웃</a>
+				
+				<!-- csrf token 인증 -->
+				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+				</form>
+			   <p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
+			</sec:authorize> 
+ --%>
+
 		
 </form>
+</sec:authorize>
 <input type="hidden" id="msg" value="${msg }">
 
 
@@ -107,11 +153,10 @@
 	   var id = $('#id').val();
 	 
 	        hw.addEventListener('click', function(){
-	        	if(id == ""){
-	    			alert("로그인후 이용해 주세요");           	
-	    			location.href = "/npc/NpcList";	            	
+	        	if(){
+	    			alert("로그인후 이용해 주세요");           	          	
 	    			}else{        			
-	    			location.href = "/npc/register";	
+	    			location.href = "npc/register";	
 	    			}    
 	    		  })	
    		 </script>

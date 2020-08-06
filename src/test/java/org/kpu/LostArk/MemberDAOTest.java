@@ -23,7 +23,7 @@ public class MemberDAOTest {
 	@Test
 	public void testReadbyId() throws Exception{
 		MemberVO vo;
-		vo = memberDAO.read("min1234");
+		vo = memberDAO.read("min");
 		logger.info(vo.toString());
 	}
 	

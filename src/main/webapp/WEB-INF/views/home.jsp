@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <%@ page session="false" %>
 <html>
 <head>
@@ -21,8 +23,15 @@
 
 <tr>
 					<c:url value="/member/login" var="url"/><a href="${url}">로그인하러 가기</a><br>		
-					<c:url value="/npc/NpcList" var="url"/><a href="${url}">목록보러 가기</a> 			  				 
+					<c:url value="/npc/NpcList" var="url"/><a href="${url}">목록보러 가기</a> 	
+					<!-- 인증을 하지 않은 이용자에게만 보이도록 권한 조건을 걸었다. -->
+					<sec:authorize access="isAnonymous()">
+    					<h5><a href='<c:url value="/admin/login"/>'>관리자로그인</a> 로그인 해주세요.</h5>
+					</sec:authorize>		  				 
 					 		</tr>	  				 
+
+
+
 
 
 
