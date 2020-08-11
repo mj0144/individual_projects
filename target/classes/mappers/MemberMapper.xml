@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 로그인시 확인. -->
 <select id="loginById" resultType="mem"> 
 	<![CDATA[
-		select * from loa_member where id=#{id} AND passwd=#{passwd} AND server=#{server}
+		select * from loa_member where id=#{id} AND passwd=#{passwd}
 	]]>
 </select>
 

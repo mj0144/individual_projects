@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<beans:import resource="root-context.xml" />
+
+
+
+ <context:annotation-config />
+<beans:bean id="memberUserDetailService" class="org.security.MemberUserDetailService"/>
+<beans:bean id="memberAuthenticationProvider" class="org.security.MemberAuthenticationProvider"/>
+<beans:bean id="authDAO" class="org.security.AuthDAO"/>
+<beans:bean id="memberAccessDeniedHandler" class="org.security.MemberAccessDeniedHandler"/>
+
+
+<http auto-config="true" use-expressions="true">
+<csrf disabled="true"/>
+	<!-- npc관련은 로그인한 유저만 접근가능. -->
+	<!-- <intercept-url pattern="/npc/**" access="hasRole('ROLE_USER')"  /> --> 
+			<!-- <intercept-url pattern="/member/**" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')"/>
+		    <intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_MEMBER','ROLE_ADMIN')"/>
+		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		    <intercept-url pattern="/**" access="permitAll"/> -->
+<!-- 		권한 설정
+
+
+
+
+ -->		
+ <intercept-url pattern="/npc/list/**" access="hasRole('ROLE_nomal','ROLE_silver','ROLE_bronze')"  />
+  <intercept-url pattern="/npc/Npc_read/**" access="hasRole('ROLE_silver')"  />
+   <intercept-url pattern="/npc/register/**" access="hasRole('ROLE_bronze')" />
+   <intercept-url pattern="/member/**" access="permitAll"  />
+   
+   
+   
+   
+ <form-login username-parameter="id"
+			password-parameter="passwd" 
+			login-processing-url="/member/login"
+			login-page="/member/login" 
+			authentication-failure-url="/member/login/error"
+			default-target-url="/npc/NpcList" 
+	/>
+	<!-- authentication-failure-url="/admin/access_denied_page"   -->
+	<!-- 접근불가 핸들러  -->
+	 <access-denied-handler ref="memberAccessDeniedHandler"/> 
+			
+		<logout
+			logout-url="/member/logout"
+			logout-success-url="/member/login?msg='logout'"
+			
+		/>
+	
+					
+</http>
+
+<!-- 	<authentication-manager>
+		<authentication-provider>
+			<user-service> 인메모리 방식일때.
+				<user name="user" password="userPw" authorities="ROLE_USER" />
+				<user name="guest" password="guest" authorities="ROLE_GUEST" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager> -->
+
+        
+<authentication-manager>
+	<authentication-provider ref="memberAuthenticationProvider"/>
+    <authentication-provider user-service-ref="memberUserDetailService">    	
+    	<password-encoder ref="bcryptPasswordEncoder"/> <!-- 비밀번호 암호화 -->
+    </authentication-provider>
+        	
+    
+</authentication-manager>
+
+<!-- 비밀번호 암호화 -->
+<beans:bean id="bcryptPasswordEncoder"
+        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+
+
+
+
+ <!-- users-by-username-query :  사용자를 인증하는 컬럼
+ authorities-by-username-query : 사용자의 권한을 가져오는 컬럼 -->
+<!-- <jdbc-user-service data-source-ref="dataSource" id="memberUserDetailService"
+    users-by-username-query="select id as userName, passwd as password, enable as enabled from loa_member where id=?" 
+    authorities-by-username-query="select id as userName, authority from loa_member where id=?"
+/> -->
+
+
+<!-- 
+    <authentication-manager>
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource" 
+            users-by-username-query="select id, passwd, enable from loa_member where id=?" 
+    authorities-by-username-query="select id, authority from loa_member where id=?"  />
+        </authentication-provider>
+    </authentication-manager> -->
+
+</beans:beans>
+
+
+
+
+

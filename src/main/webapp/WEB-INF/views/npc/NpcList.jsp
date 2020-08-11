@@ -1,7 +1,30 @@
+<%@page import="java.net.URLDecoder"%>
+<%@page import="org.springframework.security.core.authority.SimpleGrantedAuthority"%>
+<%@page import="java.util.Collection"%>
+<%@page import="org.springframework.security.core.GrantedAuthority"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    
+    <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
+
+<%
+     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    Object principal = auth.getPrincipal(); //사용자 정보를 가져옴.
+    										//인증하지 않은 상태이면 anonymousUser 반환
+    										//인증이 된 상태이면 로그인한 사용자의 정보가 담긴 Object 객체 return
+    String name = "";
+    boolean authorized=false;
+    if(principal != null) {
+        name = auth.getName();
+        
+        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        authorized = authorities.contains(new SimpleGrantedAuthority("brozen"));
+    } 
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +41,21 @@
 <script type="text/javascript" src="../resources/js/bootstrap.js"></script>
 
 
+<!-- isAnonymous()는 익명사용자, isAuthenticated()는 인증한 사용자 -->
+<sec:authorize access="isAuthenticated()">
+
+
 <form name="form2">
 	<div align=center class="container">
 		<h1><header>NPC 목록</header></h1><br>
 		
 		
-
-    <input type="button" id="hw" value="등록하기" class="btn btn-default"/>	
+    <h5><%=name %>님, 반갑습니다. <%=authorized %></h5>
+    <sec:authorize access="isAuthenticated()"> 
+        <input type="button" id="hw" value="등록하기" class="btn btn-default"/>	
+    
+    
+    </sec:authorize>
 	<input type="hidden" id="id" value='${member.id}'/>
 <!-- <table class="type11"> -->
 		<table class="table table-hover type11">	<!-- 마우스 커서 이동시 해당부분 회색으로 표시 -->
@@ -53,7 +84,7 @@
 			    <td>	
 			      <%--  <c:url value="/npc/read?npc_num=${npc.npc_num}" var="url" /><a href="${url}">정보 보기</a><br> --%>
 			      <a href="/npc/Npc_read${pageMaker.makeQuery(pageMaker.pagevo.page)}&npc_num=${npc.npc_num }">정보보기</a>
-			       	
+			       
 			       	<!-- 작성자와 로그인 id가 같아야 수정, 삭제 버튼 생성. -->
 					  <c:if test="${member.id == npc.writer}">				 			  
 						<c:url value="/npc/Npc_modify${pageMaker.makeQuery(pageMaker.pagevo.page) }&npc_num=${npc.npc_num}" var="url"/><a href="${url}">수정하기</a><br>		 			  				 
@@ -87,16 +118,44 @@
 				
 	
 		<!-- 로그인 되어 있으면, '로그아웃' 버튼뜨고, 로그인상태가 아니면 '로그인하러 가기'버튼. -->
-			<c:if test="${member.id != null}">				 			  
+			<%-- <c:if test="${member.id != null}">				 			  
 				<c:url value="/member/logout" var="url"/><a href="${url}">로그아웃</a><br>
+				<a href="/member/logout" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
+				<form id="logout-form" action='<c:url value='/member/logout'/>' method="POST">
+				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+				</form>
 			       <c:url value="/member/read?id=${member.id}" var="url" /><a href="${url}">나의 정보 보기</a><br>
 			</c:if>
 				<c:if test="${member.id == null}">				 			  
 				<c:url value="/member/login" var="url"/><a href="${url}">로그인하러 가기</a><br>
-			</c:if>
+			</c:if> --%>
+			<sec:authorize access="isAnonymous()">
+			   <a href="/member/login">로그인</a>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+			   <a href="/member/logout" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
+				<form id="logout-form" action='<c:url value='/member/logout'/>' method="POST">
+				<!-- csrf token 인증 -->
+				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+				</form>
+			   <p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
+			</sec:authorize> 
+			
+			<%-- <sec:authorize access="isAuthenticated()">
+			   <a href="<c:url value='/member/login'/>">로그아웃</a>
+				
+				<!-- csrf token 인증 -->
+				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+				</form>
+			   <p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
+			</sec:authorize> 
+ --%>
+
 		
 </form>
+</sec:authorize>
 <input type="hidden" id="msg" value="${msg }">
+
 
 
     
@@ -105,21 +164,21 @@
 	<!-- 등록시, 로그인 여부 체크 -->
 	   <script type="text/javascript">
 	   var id = $('#id').val();
-	 
-	        hw.addEventListener('click', function(){
-	        	if(id == ""){
-	    			alert("로그인후 이용해 주세요");           	
-	    			location.href = "/npc/NpcList";	            	
-	    			}else{        			
-	    			location.href = "/npc/register";	
-	    			}    
-	    		  })	
+	 	$('#hw').click(function(){     			
+    			location.href = "/npc/register";	 
+		 })
+/* 	        hw.addEventListener('click', function(){
+	        	
+	    		  })	 */
    		 </script>
    		 
   <script>
+
+  	
 		$(function(){
-			if($('#msg').val() != ''){ 
-				alert($('#msg').val())
+			var msg = decodeURI($('#msg').val())
+			if(msg != ''){ 
+				alert(msg)
 				$('#msg').val('');
 			}
 		})

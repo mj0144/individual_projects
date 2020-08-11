@@ -6,6 +6,7 @@ import org.DAO.MemberDAO;
 import org.VO.MemberVO;
 import org.VO.NpcVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +14,12 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	
+	@Autowired
+	BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	
 	public void memberJoin(MemberVO vo) throws Exception{
+		vo.setPasswd(bcryptPasswordEncoder.encode(vo.getPasswd()));
 		memberDAO.join(vo);
 	}
 	

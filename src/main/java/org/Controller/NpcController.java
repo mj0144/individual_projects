@@ -144,7 +144,7 @@ public class NpcController {
 		//총 게시물 갯수
 		maker.setTotalCount(npcService.countPaging(pagevo));
 		List<NpcVO> npcs = npcService.pageList(pagevo);
-		
+		System.out.println("msg: "+msg);
 		model.addAttribute("npcs", npcs);
 		model.addAttribute("pageMaker", maker);
 		model.addAttribute("msg", msg);

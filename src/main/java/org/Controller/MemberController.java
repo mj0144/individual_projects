@@ -59,7 +59,9 @@ public class MemberController {
     
     //로그인
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginGet() throws Exception {
+	public String loginGet(String msg, Model model) throws Exception {
+    	model.addAttribute("msg", msg);
+
 		return "member/Member_login";
 	}
 
@@ -70,35 +72,34 @@ public class MemberController {
 		MemberVO memberVO = memberService.login(member);
 		HttpSession session = requset.getSession();
 
-	
-		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
-			session.setAttribute("islogin", true);  //로그인 상태.
+			//session.setAttribute("islogin", true);  //로그인 상태.
 	    	
 			return "redirect:/npc/NpcList";
-			
-		}else { //실패시 
-			model.addAttribute("result", "fail");
-			return "redirect:/member/login"; //앞에 '/'빠지면 안돼.
-		}
 
+	}
+	
+	@RequestMapping(value="/login/error", method=RequestMethod.GET)
+	public String loginError() {
+		//model.addAttribute("result", "fail");
+		return "redirect:/member/login"; //앞에 '/'빠지면 안돼.
 	}
 	
 	
 	
 	
 	//로그아웃
-	@RequestMapping(value= "/logout", method=RequestMethod.GET)
-	public String logout(HttpServletRequest request) throws Exception{
+	@RequestMapping(value= "/logout", method=RequestMethod.POST)
+	public String logout(HttpServletRequest request, RedirectAttributes rt) throws Exception{
 
-		HttpSession session = request.getSession();
+/*		HttpSession session = request.getSession();
 
 		session.removeAttribute("member");
-		session.removeAttribute("islogin");
+		session.removeAttribute("islogin");*/
 		
+		rt.addAttribute("msg", "로그아웃되었습니다");
 		
-		
-		return "redirect:/npc/NpcList";
+		return "redirect:/member/login";
 	}
 	
     @RequestMapping(value = "/read", method = RequestMethod.GET)
