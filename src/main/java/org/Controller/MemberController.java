@@ -72,18 +72,17 @@ public class MemberController {
 		MemberVO memberVO = memberService.login(member);
 		HttpSession session = requset.getSession();
 
-	
-		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
-			session.setAttribute("islogin", true);  //로그인 상태.
+			//session.setAttribute("islogin", true);  //로그인 상태.
 	    	
 			return "redirect:/npc/NpcList";
-			
-		}else { //실패시 
-			model.addAttribute("result", "fail");
-			return "redirect:/member/login"; //앞에 '/'빠지면 안돼.
-		}
 
+	}
+	
+	@RequestMapping(value="/login/error", method=RequestMethod.GET)
+	public String loginError() {
+		//model.addAttribute("result", "fail");
+		return "redirect:/member/login"; //앞에 '/'빠지면 안돼.
 	}
 	
 	

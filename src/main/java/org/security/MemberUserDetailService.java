@@ -26,7 +26,7 @@ public class MemberUserDetailService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		
-		//사용자 정보를 MemberUserDetail형으로 가져옴
+		//사용자 정보를 MemberUserDetail(UserDetails)형으로 가져옴
 		 MemberUserDetail member = authDAO.getUserById(id);
 		
 		 logger.info("insert member : " + member);

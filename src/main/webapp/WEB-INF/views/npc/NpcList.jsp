@@ -1,3 +1,7 @@
+<%@page import="java.net.URLDecoder"%>
+<%@page import="org.springframework.security.core.authority.SimpleGrantedAuthority"%>
+<%@page import="java.util.Collection"%>
+<%@page import="org.springframework.security.core.GrantedAuthority"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -12,8 +16,12 @@
     										//인증하지 않은 상태이면 anonymousUser 반환
     										//인증이 된 상태이면 로그인한 사용자의 정보가 담긴 Object 객체 return
     String name = "";
+    boolean authorized=false;
     if(principal != null) {
         name = auth.getName();
+        
+        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        authorized = authorities.contains(new SimpleGrantedAuthority("brozen"));
     } 
 %>
 
@@ -42,8 +50,12 @@
 		<h1><header>NPC 목록</header></h1><br>
 		
 		
-    <h5><%=name %>님, 반갑습니다.</h5>
-    <input type="button" id="hw" value="등록하기" class="btn btn-default"/>	
+    <h5><%=name %>님, 반갑습니다. <%=authorized %></h5>
+    <sec:authorize access="isAuthenticated()"> 
+        <input type="button" id="hw" value="등록하기" class="btn btn-default"/>	
+    
+    
+    </sec:authorize>
 	<input type="hidden" id="id" value='${member.id}'/>
 <!-- <table class="type11"> -->
 		<table class="table table-hover type11">	<!-- 마우스 커서 이동시 해당부분 회색으로 표시 -->
@@ -72,7 +84,7 @@
 			    <td>	
 			      <%--  <c:url value="/npc/read?npc_num=${npc.npc_num}" var="url" /><a href="${url}">정보 보기</a><br> --%>
 			      <a href="/npc/Npc_read${pageMaker.makeQuery(pageMaker.pagevo.page)}&npc_num=${npc.npc_num }">정보보기</a>
-			       	
+			       
 			       	<!-- 작성자와 로그인 id가 같아야 수정, 삭제 버튼 생성. -->
 					  <c:if test="${member.id == npc.writer}">				 			  
 						<c:url value="/npc/Npc_modify${pageMaker.makeQuery(pageMaker.pagevo.page) }&npc_num=${npc.npc_num}" var="url"/><a href="${url}">수정하기</a><br>		 			  				 
@@ -145,26 +157,28 @@
 <input type="hidden" id="msg" value="${msg }">
 
 
+
     
     
 </body>
 	<!-- 등록시, 로그인 여부 체크 -->
 	   <script type="text/javascript">
 	   var id = $('#id').val();
-	 
-	        hw.addEventListener('click', function(){
-	        	if(){
-	    			alert("로그인후 이용해 주세요");           	          	
-	    			}else{        			
-	    			location.href = "npc/register";	
-	    			}    
-	    		  })	
+	 	$('#hw').click(function(){     			
+    			location.href = "/npc/register";	 
+		 })
+/* 	        hw.addEventListener('click', function(){
+	        	
+	    		  })	 */
    		 </script>
    		 
   <script>
+
+  	
 		$(function(){
-			if($('#msg').val() != ''){ 
-				alert($('#msg').val())
+			var msg = decodeURI($('#msg').val())
+			if(msg != ''){ 
+				alert(msg)
 				$('#msg').val('');
 			}
 		})

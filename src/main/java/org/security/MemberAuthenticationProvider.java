@@ -30,7 +30,10 @@ public class MemberAuthenticationProvider implements AuthenticationProvider{
 		//입력한 회원의 username과 password를 가져옴
 		String id= (String) authentication.getPrincipal();
 		String passwd = (String) authentication.getCredentials();
+		System.out.println("id : " + id);
 		MemberUserDetail userDetail=null;
+		
+		
 		//입력한 회원의 id를 db쿼리에 값으로 넘겨줌
 		try {
 			userDetail = (MemberUserDetail) memberUserDetailService.loadUserByUsername(id);

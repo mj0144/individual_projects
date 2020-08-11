@@ -9,7 +9,7 @@
 <body>
 
 
-access_denied_page페이지
+권한이 필요합
 
 
 </body>

@@ -11,11 +11,21 @@
 		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml 
+		<param-value>/WEB-INF/spring/root-context.xml
+		/WEB-INF/spring/spring-security.xml
 		</param-value>
 
 	</context-param>
 
+	
+<!-- 
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/spring-security.xml
+		</param-value>
+
+	</context-param> -->
+ 
 	
 
 
@@ -67,15 +77,6 @@
           <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/spring-security.xml
-		</param-value>
-
-	</context-param>
- 
 
 
 

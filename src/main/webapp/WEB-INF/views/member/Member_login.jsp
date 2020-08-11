@@ -62,7 +62,7 @@
 		<!-- 로그인 실패시, security에서 에외발생시 저장하는 세션값을 가져와 출력.-->
 		<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
 		    <font color="red">
-		        <p>Your login attempt was not successful due to <br/>
+		        
 		            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
 		        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
 		    </font>
@@ -98,7 +98,7 @@
 </body>
 
 <script type="text/javascript">
-
+/* 
 
 $(document).ready(function() {
 	var result = "${result}";
@@ -107,7 +107,7 @@ $(document).ready(function() {
 		alert("아이디 또는 비밀번호가 틀립니다.");
 	}
 	
-})
+}) */
 
 
 
