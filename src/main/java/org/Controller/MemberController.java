@@ -43,9 +43,10 @@ public class MemberController {
 	
 	
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinMemberPost(@ModelAttribute("member") MemberVO vo) throws Exception {
+	public String joinMemberPost(@ModelAttribute("member") MemberVO vo, RedirectAttributes ra) throws Exception {
     	memberService.memberJoin(vo);	
-		return "member/Member_login";
+    	ra.addAttribute("msg", "join_complete");
+		return "redirect:/member/login";
 	}
     
     
@@ -88,16 +89,11 @@ public class MemberController {
 	
 	
 	
-	//로그아웃
-	@RequestMapping(value= "/logout", method=RequestMethod.POST)
-	public String logout(HttpServletRequest request, RedirectAttributes rt) throws Exception{
-
-/*		HttpSession session = request.getSession();
-
-		session.removeAttribute("member");
-		session.removeAttribute("islogin");*/
+	//로그아웃 //security에서 던질거야
+	@RequestMapping(value= "/logout", method=RequestMethod.GET)
+	public String logout(RedirectAttributes rt, String msg) throws Exception{
 		
-		rt.addAttribute("msg", "로그아웃되었습니다");
+		rt.addAttribute("msg", msg);
 		
 		return "redirect:/member/login";
 	}

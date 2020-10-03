@@ -8,55 +8,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="../resources/npc.css" type="text/css"></link>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script> -->
-<script type="text/javascript" src="<c:url value="/resources/jquery-3.4.1.min.js"/>"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
 
 <meta charset="UTF-8">
 <title>Join</title>
 </head>
-<body id="back">
-	<div align=center>
-		<h2><header>회원가입</header></h2>
-		
-		<form name=form1 method="post" action="/member/join" id="form1">
-			<table class="type11">	
-				<tr><th>아이디</th><td><input type="text" name="id" id="id" autofocus placeholder="아이디를 입력하세요">
-				<input type="button" id="idCheck" value="중복확인"/>
-				<div id="label" style="color:red"></div>
-				</tr>
-				<tr><th>비밀번호</th><td><input type="password" name="passwd" placeholder="********"></td></tr>
-				<tr><th>비밀번호 확인</th><td><input type="password" name="passwdcheck" placeholder="********"></td></tr>
+
+<style>
+	.card{margin-top: 100px; margin-bottom: 100px;}
+</style>
+
+<body>
+
+
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card">
+			<header class="card-header">
+				<a href="/" class="float-right btn btn-outline-primary mt-1">Login</a>
+				<h4 class="card-title mt-2">Sign up</h4>
+			</header>
+			
+			<article class="card-body">
+			<form>
+				<div class="form-row">
+					<div class="col form-group">
+						<label>ID </label> 
+							<input type="text" name="id" id="id" tabindex="1" class="form-control" placeholder="Username" value="">			  
+					</div> <!-- form-group end.// -->
+					
+				</div> <!-- form-row end.// -->
+				<div class="form-group">
+					<label>nickName</label>
+					<input type="text" name="nickname" id="nickname"class="form-control" placeholder="nickName">
+				</div> <!-- form-group end.// -->
+				<div class="form-group">
+						<label>password </label> 
+						<input type="password" name="passwd" id="passwd" tabindex="1" class="form-control" placeholder="Password">		
+				</div>
+				<div class="form-group">
+						<label>passwordcheck </label> 
+						<input type="password" name="passwdcheck" id="passwdcheck" tabindex="1" class="form-control" placeholder="Confirm Password">		
+						<small class="form-text text-muted">We'll never share your email with anyone else.</small>
+						
+				</div>
 				
-				<tr><th>닉네임</th><td><input type="text" name="nickname"  placeholder="닉네임을 입력하세요"></td></tr>
-				<tr><th>server</th><td>
-					<select name=server>
-						<option selected>루페론</option>
-						<option>이그히람</option>
-						<option>기에나</option>
-						<option>시리우스</option>
-						<option>크라테르</option>
-						<option>프로키온</option>
-						<option>알데바란</option>
-						<option>아크투르스</option>
-						<option>안타레스</option>
-						<option>에버그레이스</option>
-						<option>베아트리스</option>
-					</select>
-				</td></tr>
-			</table>
-		
-					<input type="button" id="commit" value="완료"/>
-					<input type="reset" id="reset" value="다시 작성">	
+				<div class="form-group">
+        			<button type="submit" class="btn btn-primary btn-block"> Register  </button>
+    			</div> <!-- form-group// -->   
+			 </form>
+			</article> <!-- card-body end .// -->
 
-		</form>
-		<a href="/member/login">되돌아가기</a><br></br>
-		
-	</div>
+		</div> <!-- col.//-->	
+	</div> <!-- row.//-->
+</div> 
+<!--container end.//-->
 
 
 
-  
+
+
+
+
+
 
 
 <script>
@@ -111,6 +130,11 @@
 				$('#label').attr('style', 'color:red')
 			}   
 	    })	 
+	    
+	    $('#reset').click(function(){
+			$('#label').text('');
+
+		    })
 
 
 	

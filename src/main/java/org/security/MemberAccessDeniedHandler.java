@@ -22,7 +22,7 @@ public class MemberAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			
-			AccessDeniedException accessDeniedException) throws IOException, ServletException {
+		AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	        if (auth != null) {
 	        	logger.info("User: " + auth.getName() + " attempted to access the protected URL: " + request.getRequestURI());

@@ -1,102 +1,82 @@
-<%@page import="java.net.URLDecoder"%>
-<%@page import="org.springframework.security.core.authority.SimpleGrantedAuthority"%>
-<%@page import="java.util.Collection"%>
-<%@page import="org.springframework.security.core.GrantedAuthority"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<%@ page import="org.springframework.security.core.Authentication" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-
-
-<%
-     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    Object principal = auth.getPrincipal(); //사용자 정보를 가져옴.
-    										//인증하지 않은 상태이면 anonymousUser 반환
-    										//인증이 된 상태이면 로그인한 사용자의 정보가 담긴 Object 객체 return
-    String name = "";
-    boolean authorized=false;
-    if(principal != null) {
-        name = auth.getName();
-        
-        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-        authorized = authorities.contains(new SimpleGrantedAuthority("brozen"));
-    } 
-%>
+<%@include file="../commons/authentication.jsp" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="../resources/npc.css" type="text/css"></link>
-					<link rel="stylesheet" href="../resources/css/bootstrap.css"></link>
-	
-<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
-<meta charset="UTF-8">
-<title>NPC List</title>
+		
+<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script> 
+ 			
+  			<!--   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+  			  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css3">
+			 
+		 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<!------ Include the above in your HEAD tag ---------->
 </head>
 
-<body id="back">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="../resources/js/bootstrap.js"></script>
+<body>
 
 
-<!-- isAnonymous()는 익명사용자, isAuthenticated()는 인증한 사용자 -->
-<sec:authorize access="isAuthenticated()">
 
 
-<form name="form2">
-	<div align=center class="container">
-		<h1><header>NPC 목록</header></h1><br>
-		
-		
-    <h5><%=name %>님, 반갑습니다. <%=authorized %></h5>
-    <sec:authorize access="isAuthenticated()"> 
-        <input type="button" id="hw" value="등록하기" class="btn btn-default"/>	
-    
-    
-    </sec:authorize>
-	<input type="hidden" id="id" value='${member.id}'/>
-<!-- <table class="type11"> -->
-		<table class="table table-hover type11">	<!-- 마우스 커서 이동시 해당부분 회색으로 표시 -->
-		<thead>
-		<tr>	
-		    <th>NPC_name</th
-		    ><th>nomal</th>
-		    <th>interest</th>
-		    <th>friendship</th>
-		    <th>turst</th>
-		    <th>NPC_region</th>
-		    <th>작성자</th>
-		    <th></th>
-		  </tr>
-		  </thead>
-		  <tbody>
-		  <c:forEach var="npc" items="${npcs}" >				
-			  <tr>
-			    <td><c:out value="${npc.NPC_name}"/></td>
-			    <td><c:out value="${npc.nomal}"/></td>
-			    <td><c:out value="${npc.interest}"/></td>
-			    <td><c:out value="${npc.friendship}"/></td>
-			    <td><c:out value="${npc.turst}"/></td>
-			    <td><c:out value="${npc.NPC_region}"/></td>
-	 		    <td><c:out value="${npc.writer}"/></td>			 		    	    
-			    <td>	
-			      <%--  <c:url value="/npc/read?npc_num=${npc.npc_num}" var="url" /><a href="${url}">정보 보기</a><br> --%>
-			      <a href="/npc/Npc_read${pageMaker.makeQuery(pageMaker.pagevo.page)}&npc_num=${npc.npc_num }">정보보기</a>
-			       
-			       	<!-- 작성자와 로그인 id가 같아야 수정, 삭제 버튼 생성. -->
-					  <c:if test="${member.id == npc.writer}">				 			  
-						<c:url value="/npc/Npc_modify${pageMaker.makeQuery(pageMaker.pagevo.page) }&npc_num=${npc.npc_num}" var="url"/><a href="${url}">수정하기</a><br>		 			  				 
-				      <c:url value="/npc/delete${pageMaker.makeQuery(pageMaker.pagevo.page) }&npc_num=${npc.npc_num}&writer=${npc.writer }" var="url"/><a href="${url}">삭제하기</a><br>
-				      </c:if>			      
-			    </td>
-			  </tr>
-		  </c:forEach>
-		  </tbody>
 
-		</table>
+<div align=center class="container">
+    <div class="row">    
+        <div class="col-xs-8 col-xs-offset-2">
+		    <div class="input-group">
+                <div class="input-group-btn search-panel">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    	<span id="search_concept">Filter by</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="">NPC_name</a></li>
+                      <li><a href="">NPC_region</a></li>
+                      <li><a href="">content</a></li>
+                    </ul>
+                </div>
+                <input type="hidden" name="search_param" value="all" id="search_param">         
+                <input type="text" class="form-control" name="x" placeholder="Search term...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
 	</div>
+		<div class="col-md-9">
+    	 <table class="table table-list-search">
+                    <thead>
+						<tr>	
+							<th>num</th>
+						    <th>NPC_name</th>
+						    <th>NPC_region</th>
+						    <th>작성자</th>
+						    <th></th>
+						  </tr>
+					 </thead>
+                     <tbody>
+						  <c:forEach var="npc" items="${npcs}" >				
+							  <tr>
+							  	<td><c:out value="${npc.npc_num}"/></td>
+							    <td><a href="/npc/Npc_read${pageMaker.makeQuery(pageMaker.pagevo.page)}&npc_num=${npc.npc_num }">${npc.NPC_name}</a></td>
+							    <td><c:out value="${npc.NPC_region}"/></td>
+					 		    <td><c:out value="${npc.writer}"/></td>			 		    	    							       							       		      
+							  </tr>
+					 	 </c:forEach>
+		  			</tbody>
+                </table>   
+		</div>
+	</div>
+
+
+		
+		
+		
+		
+	<!-- 페이징 -->
 	<div class="text-center">
 			<ul class="pagination pagination-sm justify-content-center">
 				<c:if test="${pageMaker.prev }">
@@ -116,62 +96,17 @@
 			</ul>
 		</div>
 				
-	
-		<!-- 로그인 되어 있으면, '로그아웃' 버튼뜨고, 로그인상태가 아니면 '로그인하러 가기'버튼. -->
-			<%-- <c:if test="${member.id != null}">				 			  
-				<c:url value="/member/logout" var="url"/><a href="${url}">로그아웃</a><br>
-				<a href="/member/logout" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
-				<form id="logout-form" action='<c:url value='/member/logout'/>' method="POST">
-				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-				</form>
-			       <c:url value="/member/read?id=${member.id}" var="url" /><a href="${url}">나의 정보 보기</a><br>
-			</c:if>
-				<c:if test="${member.id == null}">				 			  
-				<c:url value="/member/login" var="url"/><a href="${url}">로그인하러 가기</a><br>
-			</c:if> --%>
-			<sec:authorize access="isAnonymous()">
-			   <a href="/member/login">로그인</a>
-			</sec:authorize>
-			<sec:authorize access="isAuthenticated()">
-			   <a href="/member/logout" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
-				<form id="logout-form" action='<c:url value='/member/logout'/>' method="POST">
-				<!-- csrf token 인증 -->
-				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-				</form>
-			   <p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
-			</sec:authorize> 
-			
-			<%-- <sec:authorize access="isAuthenticated()">
-			   <a href="<c:url value='/member/login'/>">로그아웃</a>
-				
-				<!-- csrf token 인증 -->
-				   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-				</form>
-			   <p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
-			</sec:authorize> 
- --%>
+
+
 
 		
-</form>
-</sec:authorize>
 <input type="hidden" id="msg" value="${msg }">
 
 
 
     
     
-</body>
-	<!-- 등록시, 로그인 여부 체크 -->
-	   <script type="text/javascript">
-	   var id = $('#id').val();
-	 	$('#hw').click(function(){     			
-    			location.href = "/npc/register";	 
-		 })
-/* 	        hw.addEventListener('click', function(){
-	        	
-	    		  })	 */
-   		 </script>
-   		 
+</body>	 
   <script>
 
   	
@@ -182,6 +117,17 @@
 				$('#msg').val('');
 			}
 		})
+  </script>
+  <script>
+  $(document).ready(function(e){
+    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+		e.preventDefault();
+		var param = $(this).attr("href").replace("#","");
+		var concept = $(this).text();
+		$('.search-panel span#search_concept').text(concept);
+		$('.input-group #search_param').val(param);
+	});
+});
   </script>
 	
 </html>

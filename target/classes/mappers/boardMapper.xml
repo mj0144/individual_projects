@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<insert id="addAttach">
+		insert into board_attach(board_num, fullName) values (LAST_INSERT_ID(), #{fullName})
+	</insert>
+	
+	<insert id="write" parameterType="boardVo">
+		insert into board (title, content, regdate, writer) values (#{title}, #{content}, now(), #{writer})
+	</insert>
+	
+	<select id="list" resultType="boardVo">
+		select board_num, title, regdate, writer from board;
+	</select>
+	
+	
+	
+	<select id="limitList" resultType="boardVo" parameterType="pageVo">
+		<![CDATA[
+			select * from board where board_num>0 
+			order by board_num asc limit #{startBoardNum}, #{perPageNum} 
+		]]>
+	</select>
+	<select id="totalCount" resultType="int">
+		<![CDATA[
+			select count(*) from board where board_num>0
+		]]>			
+	</select>
+
+</mapper>

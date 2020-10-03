@@ -40,8 +40,8 @@ public class PageVO {
 	
 	//sql구문에서 시작 위치를 지정할 때 사용.
 	//limit #{pageStart}, #{perPageNum}
-	public int getPageStart() {
-		return (this.page-1) * perPageNum; //시작페이지.
+	public int getStartBoardNum() {
+		return (this.page-1) * perPageNum; //게시물을 몇번부터 뽑을 건지.
 	}
 	
 	

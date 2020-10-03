@@ -54,17 +54,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 -->
 <select id="search" resultType="npc">
-	<![CDATA[select * from loa_npc where NPC_name like #{search}]]>
+	select * from loa_npc where NPC_name like #{search}
 </select>
 
 
 
 <!-- 페이징 처리 -->
 <select id="paging" resultType="npc">
-	select * from loa_npc
+<![CDATA[	select * from loa_npc
 	where npc_num>0 
 	order by npc_num asc
-	limit #{pageStart}, #{perPageNum}
+	limit #{startBoardNum}, #{perPageNum}
+]]>
 </select>
 
 

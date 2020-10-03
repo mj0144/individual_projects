@@ -22,18 +22,45 @@
  <resources mapping="/resources/**" location="WEB-INF/resources/" />
 
 
+<!-- 첫화면 url매핑 -->
+<!--  <view-controller path="/" view-name="home"/> -->
 
- <view-controller path="/" view-name="home"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+ <!-- 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="contentType" value="text/html; charset=UTF-8" />
+	</beans:bean>  
+	 -->
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>classpath:tiles/*.xml</beans:value>
+			</beans:list>
+		</beans:property>
+			
+		<beans:property name="preparerFactoryClass" 
+			value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"/>
+	
 	</beans:bean>
+	
+	
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>	
+	</beans:bean>	
 
 <context:annotation-config />
 
+<!-- 이미지 업로드 -->
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<beans:property name="maxUploadSize" value="10485760"/>
+</beans:bean>
+<!-- 이미지 업로드될 경로 지정 -->
+<beans:bean id="uploadPath" class="java.lang.String">
+	<beans:constructor-arg value="C:\\infoproject\\boardImg"/>
+</beans:bean>
 	
 
 </beans:beans>

@@ -1,0 +1,50 @@
+.textarea_input {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    padding: 11px 12px 10px;
+    border: 1px solid #ebecef;
+    box-sizing: border-box;
+    overflow: hidden;
+    resize: none;
+    word-break: break-all;
+    font-size: 15px;
+    letter-spacing: -.23px;
+    line-height: 17px;
+    outline: none;
+}
+.WritingHeader {
+    position: relative;
+    margin-top: 20px;
+    border-bottom: 1px solid #323232;
+}
+.WritingContent {
+    position: relative;
+    padding-top: 12px;
+    padding-bottom: 50px;
+}
+.WritingHeader .title {
+    margin-bottom: 16px;
+    font-size: 22px;
+    color: var(--skinTextColor);
+}
+.WritingHeader .tool_area {
+    position: absolute;
+    bottom: 12px;
+    right: 0;
+}
+.BaseButton.size_default {
+    min-width: 46px;
+    height: 36px;
+    margin-left: 10px;
+    padding: 0 12px;
+    font-size: 13px;
+    line-height: 36px;
+}
+.WritingWrap {
+    color: #000;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}

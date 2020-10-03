@@ -33,12 +33,18 @@
 
 
  -->		
- <intercept-url pattern="/npc/list/**" access="hasRole('ROLE_nomal','ROLE_silver','ROLE_bronze')"  />
+ <!-- <intercept-url pattern="/npc/list/**" access="hasRole('ROLE_nomal','ROLE_silver','ROLE_bronze')"  />
   <intercept-url pattern="/npc/Npc_read/**" access="hasRole('ROLE_silver')"  />
    <intercept-url pattern="/npc/register/**" access="hasRole('ROLE_bronze')" />
+   <intercept-url pattern="/member/**" access="permitAll"  /> -->
+   <intercept-url pattern="/npc/list/**" access="hasRole('nomal','silver','bronze')"  />
+  <intercept-url pattern="/npc/Npc_read/**" access="permitAll"  />
+   <intercept-url pattern="/npc/register/**" access="hasRole('bronze')" />
    <intercept-url pattern="/member/**" access="permitAll"  />
+   <intercept-url pattern="/board/write" access="hasRole('ROLE_nomal','ROLE_silver','ROLE_bronze')" />
    
    
+   <session-management> <concurrency-control max-sessions = "1" error-if-maximum-exceeded = "true" /> </session-management>
    
    
  <form-login username-parameter="id"
@@ -52,6 +58,8 @@
 	<!-- 접근불가 핸들러  -->
 	 <access-denied-handler ref="memberAccessDeniedHandler"/> 
 			
+			
+		<!-- logout url이 요청되면. -->	
 		<logout
 			logout-url="/member/logout"
 			logout-success-url="/member/login?msg='logout'"

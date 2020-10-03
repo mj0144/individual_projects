@@ -28,28 +28,15 @@ public class MemberAuthenticationProvider implements AuthenticationProvider{
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		
 		//입력한 회원의 username과 password를 가져옴
-		String id= (String) authentication.getPrincipal();
-		String passwd = (String) authentication.getCredentials();
-		System.out.println("id : " + id);
+		String id= (String) authentication.getPrincipal(); //접근주체 : 리소스에 접근하는 대상
+		String passwd = (String) authentication.getCredentials(); //리소스에 접근하는 대상의 비밀번호
 		MemberUserDetail userDetail=null;
 		
 		
 		//입력한 회원의 id를 db쿼리에 값으로 넘겨줌
-		try {
-			userDetail = (MemberUserDetail) memberUserDetailService.loadUserByUsername(id);
-			logger.info(userDetail.toString());			
-		} catch (UsernameNotFoundException e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		} catch(BadCredentialsException e) {
-			e.printStackTrace();
-		}catch(LockedException e){
-			e.printStackTrace();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
+
+		userDetail = (MemberUserDetail) memberUserDetailService.loadUserByUsername(id);
+		logger.info(userDetail.toString());			
 		
 		if(!matchPassword(passwd, userDetail.getPassword())) {
 			throw new BadCredentialsException("비밀번호가 알맞지 않습니다");
