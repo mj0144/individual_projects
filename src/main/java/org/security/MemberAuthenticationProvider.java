@@ -21,7 +21,7 @@ public class MemberAuthenticationProvider implements AuthenticationProvider{
 	private static final Logger logger = LoggerFactory.getLogger(MemberAuthenticationProvider.class);
 	
 	@Autowired
-	BCryptPasswordEncoder bcryptPasswordEncoder;
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	
 	@Override
@@ -34,20 +34,13 @@ public class MemberAuthenticationProvider implements AuthenticationProvider{
 		
 		
 		//입력한 회원의 id를 db쿼리에 값으로 넘겨줌
-
 		userDetail = (MemberUserDetail) memberUserDetailService.loadUserByUsername(id);
 		logger.info(userDetail.toString());			
 		
-		if(!matchPassword(passwd, userDetail.getPassword())) {
-			throw new BadCredentialsException("비밀번호가 알맞지 않습니다");
+		if(!matchPassword(passwd, userDetail.getPassword()) || userDetail == null) {
+			throw new BadCredentialsException("아이디 또는 비밀번호가 틀립니다");
 		}
-		
-		if(!userDetail.isEnable()) {
-			throw new BadCredentialsException("회원정보가 없습니다");
-		}
-		
-		
-		
+
 		//화면에서 입력한 정보, db에서 가져온 권한을 리턴
 		return new UsernamePasswordAuthenticationToken(id, passwd, userDetail.getAuthorities());
 	}

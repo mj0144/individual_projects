@@ -9,8 +9,13 @@
 <html>
 <head>		
 	<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
-			<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+  			<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> 
+
+
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	
 	<!------ Include the above in your HEAD tag ---------->
 </head>
 <style>
@@ -45,23 +50,31 @@
 <%-- <sec:authorize access="isAuthenticated()">
  --%>
 
-
 <div align=center class="container">
+
 <div class="container">
-<div class="row">
-	<div class="col-md-3">
-            <form action="#" method="get">
-                <div class="input-group">
-                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
-                    <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                    </span>
-                </div>
-            </form>
-        </div>
-        </div>
-	<div class="row">
+	<div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <form>
+                                <div class="card-body row no-gutters align-items-center">
+                                    <!--end of col-->
+                                    <div class="col">
+                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col-auto">
+                                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                            </form>
+                        </div>
+                        <!--end of col-->
+                    </div>
+</div>
+
+
+
 		<div class="col-md-9">
     	 <table class="table table-list-search">
                     <thead>
@@ -88,9 +101,7 @@
 	</div>
 	<div class="row">
 	    <a class="btn btn-primary slide_right" href="/board/write">글쓰기</a>
-	</div>	
-</div>
-	</div>
+	</div>	<br>
 		
 	
 		
@@ -113,7 +124,7 @@
 				</c:if>
 			</ul>
 		</div>
-				
+	</div>			
 
 			
 

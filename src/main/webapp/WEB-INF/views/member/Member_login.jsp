@@ -85,7 +85,7 @@
 										<div class="col-md-6 offset-md-4">
 	
 											<!-- <font color="red"> -->
-											<p>
+											<p style="color: red;">
 											${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 											</p>
 											<c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session" />
@@ -125,7 +125,7 @@
 
 <script>
 		$(function(){
-			if($('#msg').val() != '' && $('#msg').val){ 
+			if($('#msg').val() != ''){ 
 				if($('#msg').val()==='logout'){
 					alert('로그아웃되었습니다')
 				}else if($('#msg').val()==='join_complete'){
