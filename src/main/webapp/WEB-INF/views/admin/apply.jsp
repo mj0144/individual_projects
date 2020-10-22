@@ -27,27 +27,7 @@
 
 
 <div align=center class="container">
-<div class="container">
-	<div class="row justify-content-center">
-                        <div class="col-12 col-md-10 col-lg-8">
-                            <form>
-                                <div class="card-body row no-gutters align-items-center">
-                                    <!--end of col-->
-                                    <div class="col">
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
-                                    </div>
-                                    <!--end of col-->
-                                    <div class="col-auto">
-                                        <button class="btn btn-lg btn-success" type="submit">Search</button>
-                                    </div>
-                                    <!--end of col-->
-                                </div>
-                            </form>
-                        </div>
-                        <!--end of col-->
-                    </div>
-</div>
-        
+
         
         
         
@@ -59,8 +39,8 @@
 						    <th>NPC_name</th>
 						    <th>NPC_region</th>
 						    <th>작성자</th>
-						    <th></th>
-						  </tr>
+						    <th>승인</th>
+						 </tr>
 					 </thead>
                      <tbody>
 						  <c:forEach var="npc" items="${npcs}" >				
@@ -68,7 +48,9 @@
 							  	<td><c:out value="${npc.npc_num}"/></td>
 							    <td><a href="/npc/Npc_read${pageMaker.makeQuery(pageMaker.pagevo.page)}&npc_num=${npc.npc_num }">${npc.NPC_name}</a></td>
 							    <td><c:out value="${npc.NPC_region}"/></td>
-					 		    <td><c:out value="${npc.writer}"/></td>			 		    	    							       							       		      
+					 		    <td><c:out value="${npc.writer}"/></td>
+					 		    <td><input type="button" value="승인"></td>
+					 		    <td><input type="button" value="취소"></td>			 		    	    							       							       		      
 							  </tr>
 					 	 </c:forEach>
 		  			</tbody>

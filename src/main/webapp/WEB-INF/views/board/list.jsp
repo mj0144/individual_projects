@@ -15,37 +15,12 @@
 
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-	
+	<link rel="stylesheet" href="../resources/css/board/list.css">
 	<!------ Include the above in your HEAD tag ---------->
 </head>
-<style>
-/* slide to right */
-.slide_right {
- border:none;
- background-position: right;
- background: gray;
- -webkit-transition: all 200ms ease;
- -moz-transition: all 200ms ease;
- transition: all 200ms ease;
-     text-align: right;
- position: relative;
-}
-.slide_right:hover, .slide_right.active {
- background-position: left;
- color: silver;
-}
-.btn {
-    /*margin:.5rem; /* for this demo */
-         margin: 0 auto;
-    
-}
-</style>
 
 
 <body id="back">
-
-
-
 <!-- isAnonymous()는 익명사용자, isAuthenticated()는 인증한 사용자 -->
 <%-- <sec:authorize access="isAuthenticated()">
  --%>
@@ -90,7 +65,7 @@
 						  <c:forEach var="boardvo" items="${boardvo}" >				
 							  <tr>
 							  	<td><c:out value='${boardvo.board_num}'/></td>
-							    <td><a href="/board/read${pageMaker.makeQuery(pageMaker.pagevo.page)}&board_num=${boardvo.board_num }">${boardvo.title}</a></td>
+							    <td><a href="/board/read?board_num=${boardvo.board_num }">${boardvo.title}</a></td>
 							    <td><c:out value="${boardvo.writer}"/></td>
 					 		    <td><c:out value="${boardvo.regdate}"/></td>			 		    	    							       							       		      
 							  </tr>
@@ -109,22 +84,24 @@
 	<!-- 페이징 -->
 	<div class="text-center">
 			<ul class="pagination pagination-sm justify-content-center">
+			<!-- 이전 버튼 활성화 여부 -->
 				<c:if test="${pageMaker.prev }">
-					<li><a href="list${pageMaker.makeQuery(pageMaker.startPage-1) }">&laquo;</a></li>
+					<li class="page-item"><a class="page-link" href="list?page=${pageMaker.startPage-1}">&laquo;</a></li>
 				</c:if>
 				
 				<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="i">
 					<li class="page-item" <c:out value="${pageMaker.pagevo.page==i? 'class=active' : '' }"/>>
-						<a class="page-link" href="list${pageMaker.makeQuery(i)}">${i }</a>
+						<a class="page-link" href="list?page=${i}">${i }</a>
 					</li>
 				</c:forEach>
 				
+			<!-- 다음 버튼 활성화 여부 -->
 				<c:if test='${pageMaker.next && pageMaker.endPage >0 }'>
-					<li class="page-item"><a class="page-link" href="list${pageMaker.makeQuery(pageMaker.endPage+1) }">&raquo;</a></li>
+					<li class="page-item"><a class="page-link" href="list?page=${pageMaker.endPage+1 } ">&raquo;</a></li>
 				</c:if>
 			</ul>
 		</div>
-	</div>			
+		
 
 			
 

@@ -12,5 +12,6 @@ public interface BoardDAO {
 	public List<BoardVO> list() throws Exception;
 	public List<BoardVO> limitList(PageVO pagevo) throws Exception;
 	public int totalCount() throws Exception;
+	public BoardVO read(int board_num) throws Exception;
 
 }

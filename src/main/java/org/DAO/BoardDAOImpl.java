@@ -22,7 +22,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	@Override
 	public void write(BoardVO vo) throws Exception{
-		sqlSession.insert(namespace+".write", vo);		
+		sqlSession.insert(namespace+".write", vo);	
+		sqlSession.insert(namespace+".addAttach", vo);
 	}
 
 	@Override
@@ -39,6 +40,9 @@ public class BoardDAOImpl implements BoardDAO {
 	public int totalCount() throws Exception{
 		return sqlSession.selectOne(namespace+".totalCount");
 	}
-	
+	@Override
+	public BoardVO read(int board_num) throws Exception {
+		return sqlSession.selectOne(namespace+".read", board_num);
+	}
 	
 }

@@ -33,11 +33,15 @@
 		
 						<div class="FlexableTextArea"> 
 							<textarea placeholder="내용을 입력해주세요." class="textarea_input" name="content" id="content" style="height: 500px;"></textarea>
+							<div>
+							<div id="file_some"></div>
+								
+						</div>
 						</div>						
-				
-						<!-- <div>
-							<input type="file" name="files" id="files">
-						</div> -->
+						
+						<div>
+							<input type="file" name="files" id="files" multiple="multiple">
+						</div>
 			</div>	
 				
 		</form>
@@ -46,10 +50,30 @@
 <script>
 
 	$('.BaseButton').click(function(){
-			$('#boardWriteForm').submit();
+		$('#boardWriteForm').submit();
 	})
+	const files_array = {};
 
 
+	//이미지 미리보기.
+	$('#files').change(function(){
+		
+		for(var i=0 ; i<this.files.length; i++){
+			var fr = new FileReader;
+			files_array[i] = files[i];
+			fr.readAsDataURL(this.files[i]);
+			fr.onload = function(data){
+				$("#file_some").append('<img id="file_some" src="'+data.target.result+'" width="400px">')		
+			}
+		}
+	});
+
+
+	
+
+
+	
+		
 </script>
 
 

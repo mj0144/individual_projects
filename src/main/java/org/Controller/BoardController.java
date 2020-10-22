@@ -46,8 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class BoardController {
 	
 	//servlet-context.xml에서 등록한 업로드할 경로 C:\\infoproject\\boardImg.
-	@Autowired
-	private String uploadPath;
+
 	@Autowired
 	private BoardService boardService;
 	
@@ -57,7 +56,8 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class); 
 
 	@RequestMapping(value="/read", method=RequestMethod.GET)
-	public String read() {
+	public String read(int board_num, Model model) throws Exception {
+		model.addAttribute("boardvo", boardService.read(board_num));
 		return "board/read";
 	}
 	
@@ -67,9 +67,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String board_write(@ModelAttribute("boardvo")BoardVO boardvo, Principal principal) throws Exception {
+	public String board_write(@ModelAttribute("boardvo")BoardVO boardvo, Principal principal, List<MultipartFile> files) throws Exception {
 		boardvo.setWriter(principal.getName());
-		boardService.write(boardvo);
+		boardService.write(boardvo, files);
 		return "board/list";
 	}
 	

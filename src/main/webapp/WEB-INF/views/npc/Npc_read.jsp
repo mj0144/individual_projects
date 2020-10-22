@@ -15,8 +15,18 @@
 	h2{margin-top: 50px; margin-bottom: 20px;}
 </style>
 
-<meta charset="UTF-8">
 <title>Npc Info</title>
+<meta property="og:url" content="https://naver.com" /> 
+<meta property="og:type" content="website" /> 
+<meta property="og:title" content="공유 테스트" /> 
+<meta property="og:description" content="페이스북 공유 테스트 내용" />
+ <meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/9983C83C5AFB757A18" />
+
+
+
+
+
+
 </head>
 <body id="back">
 		
@@ -70,6 +80,44 @@
 	</div>
 </div>
 
+<div>
+	<input type="button" id="share" value="페이스북 공유 테스트">
+</div>
+
+
+
 
 </body>
+<script type="text/javascript">
+var url = 'https://naver.com';
+var title = '공유'; 
+var description = '네이버 공유 테스트';
+var imgUrl = 'https://t1.daumcdn.net/cfile/tistory/9983C83C5AFB757A18'; 
+
+
+if( ! $('meta[property="og:url"').attr('content') )
+	{ $('head').append( StringTool.format('<meta property="og:url" content="{0}" />', url) ); } 
+if( ! $('meta[property="og:type"').attr('content') ) 
+	{ $('head').append( StringTool.format('<meta property="og:type" content="{0}" />', 'website') ); }
+if( ! $('meta[property="og:title"').attr('content') )
+	{ $('head').append( StringTool.format('<meta property="og:title" content="{0}" />', title) ); }
+if( ! $('meta[property="og:description"').attr('content') )
+	{ $('head').append( StringTool.format('<meta property="og:description" content="{0}" />', description) ); }
+if( ! $('meta[property="og:image"').attr('content') ) 
+	{ $('head').append( StringTool.format('<meta property="og:image" content="{0}" />', imgUrl) ); }
+
+
+//실제 테스트 중 실행되는 코드
+$('#share').click(function(){
+	//var linkUrl = window.location.href; 
+	var linkUrl ='https://naver.com';
+	window.open( 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(linkUrl) );
+})
+
+
+</script>
+
+
 </html>
+
+<meta property="og:url">

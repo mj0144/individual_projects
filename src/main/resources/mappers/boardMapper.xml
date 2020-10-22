@@ -5,12 +5,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="board">
 
-	<insert id="addAttach">
+<!-- 	<insert id="addAttach">
 		insert into board_attach(board_num, fullName) values (LAST_INSERT_ID(), #{fullName})
-	</insert>
+	</insert> -->
 	
 	<insert id="write" parameterType="boardVo">
 		insert into board (title, content, regdate, writer) values (#{title}, #{content}, now(), #{writer})
+	</insert>
+	<insert id="addAttach" parameterType="boardVO">
+		insert into board_attach (imgPath) values
+	<foreach collection="list" item="imgPath" open='(' close=')' separator=','>
+		 (#{imgPath})
+	</foreach>
+		
+		 
 	</insert>
 	
 	<select id="list" resultType="boardVo">
@@ -29,6 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[
 			select count(*) from board where board_num>0
 		]]>			
+	</select>
+	
+	<!-- read -->
+	<select id="read" resultType="boardVo" parameterType="int">
+		select * from board where board_num=#{board_num}
 	</select>
 
 </mapper>

@@ -85,6 +85,16 @@ public class PagingQueryTest {
 		logger.info(uriComponent.toString());
 	}
 	
+	@Test
+	public void makeQueryRest() throws Exception {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.path("board")
+				.query("1")
+				.query("5")
+				.build();
+		logger.info(uriComponents.toString());
+	}
+	
 
 	
 }

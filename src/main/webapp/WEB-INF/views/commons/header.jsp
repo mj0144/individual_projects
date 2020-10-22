@@ -39,6 +39,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/board/list">커뮤니티</a>
                 </li>
+                <c:set value="<%=authority %>" var="authority"/>
+
+                <sec:authorize access="isAuthenticated()">
+                	<c:if test="${authority eq 'admin' }">
+		                <li class="nav-item">
+		                    <a class="nav-link" href="/admin/apply">관리자 페이지</a>
+		                </li>
+	                </c:if>
+                	
+                </sec:authorize>
+                
           </ul>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

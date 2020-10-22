@@ -1,6 +1,7 @@
 package org.VO;
 
 import java.util.Date;
+import java.util.List;
 
 public class BoardVO {
 	private int board_num;
@@ -10,12 +11,27 @@ public class BoardVO {
 	private String regdate;
 	private int viewcnt;
 	private int replycnt;
+	private List<String> imgPath;
 	
+
+
+	public List<String> getImgPath() {
+		return imgPath;
+	}
+
+
+
+	public void setImgPath(List<String> imgPath) {
+		this.imgPath = imgPath;
+	}
+
 	private String[] files;
 
 	public int getBoard_num() {
 		return board_num;
 	}
+
+
 
 	public void setBoard_num(int board_num) {
 		this.board_num = board_num;

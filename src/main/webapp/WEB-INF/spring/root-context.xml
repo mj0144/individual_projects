@@ -64,8 +64,8 @@
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-	
 <context:annotation-config />
+		<context:component-scan base-package="org.Utils"/>
 		
 	<context:component-scan base-package="org.Service"/>
 	<context:component-scan base-package="org.DAO"/>

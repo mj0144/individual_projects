@@ -37,11 +37,12 @@
   <intercept-url pattern="/npc/Npc_read/**" access="hasRole('ROLE_silver')"  />
    <intercept-url pattern="/npc/register/**" access="hasRole('ROLE_bronze')" />
    <intercept-url pattern="/member/**" access="permitAll"  /> -->
-   <intercept-url pattern="/npc/list/**" access="hasAnyRole('nomal','silver','bronze')"  />
+    <intercept-url pattern="/npc/list/**" access="hasAnyRole('nomal','silver','bronze')"  />
   <intercept-url pattern="/npc/Npc_read/**" access="permitAll"  />
    <intercept-url pattern="/npc/register/**" access="hasRole('bronze')" />
    <intercept-url pattern="/member/**" access="permitAll"  />
- <intercept-url pattern="/board/write/**" access="hasAnyRole('bronze', 'silver')"/>
+ <intercept-url pattern="/board/write/**" access="hasAnyRole('bronze', 'silver')"/> 
+    <intercept-url pattern="/admin/**" access="hasRole('admin')"/>
    
    
    <session-management> <concurrency-control max-sessions = "1" error-if-maximum-exceeded = "true" /> </session-management>

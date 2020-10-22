@@ -49,5 +49,12 @@ public class BoardDAO {
 		//logger.info(boardService.register(vo))
 	}
 	
+	@Test
+	public void testBoardRead() throws Exception{
+		int board_num = 1;
+		BoardVO vo = boardService.read(1);
+		logger.info(vo.toString());
+	}
+	
 	
 }
