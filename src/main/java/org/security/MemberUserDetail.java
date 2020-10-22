@@ -67,10 +67,20 @@ public class MemberUserDetail implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		 ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-	        auth.add(new SimpleGrantedAuthority(authority));
+	        auth.add(new SimpleGrantedAuthority(authority)); //권한 저장.
 	        return auth;
 
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public String getPassword() {

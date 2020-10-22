@@ -12,7 +12,7 @@
 <body id="back">
 	<div align=center>
 		<h2><header>npc 정보 등록</header></h2>
-		<form name=form1 action="register" method="post">
+		<form name=form1 action="register" method="post" id="form1">
 		<table class="type11">	
 			<tr><th>NPC_name</th><td><input type="text" name="NPC_name" id="NPC_name" autofocus placeholder="공백없이 입력하세요">				
 			<input type="button" class="nameCheck" value="중복확인">
@@ -31,7 +31,7 @@
 					<input type="hidden" name="writer" value="${sessionScope.member.id}"></td></tr>
 		
 			
-			<input type="button" name="submit" id="submit" value="등록"/><br>
+			<input type="button" name="register" id="register" value="등록"/><br>
 			<a href="/npc/NpcList">되돌아가기</a><br><br>
 			
 		</form>
@@ -45,34 +45,34 @@
 
 	$(".nameCheck").click(function(){
 	 
-	 var npc_name = $("#NPC_name").val();
-	 
-	 $.ajax({
-	  url : "/npc/nameCheck",
-	  type : "post",
-	  data : {"npc_name":npc_name},
-	  success : function(data) {
-		  		
-	   if(data >= 1) {  //중복됨
-		   $('#label').text('등록되어 있는 npc입니다. 다시 입력해주세요');
-		   $('#label').attr('style', 'color: red')
-			namechk = false;	
-	    	$("#NPC_name").empty();	    
-	   } else {	//중복안됨
-		   $('#label').text('등록가능한 npc입니다');
-		   $('#label').attr('style', 'color: blue')
-			namechk=true;
-	   }
-	  },
-	  error : function(error){
-			console.log("error : " + error);
-		}
-	 }); 
+		 var npc_name = $("#NPC_name").val();
+		 
+		 $.ajax({
+		  url : "/npc/nameCheck",
+		  type : "post",
+		  data : {"npc_name":npc_name},
+		  success : function(data) {
+			  		
+		   if(data >= 1) {  //중복됨
+			   $('#label').text('등록되어 있는 npc입니다. 다시 입력해주세요');
+			   $('#label').attr('style', 'color: red')
+				namechk = false;	
+		    	$("#NPC_name").empty();	    
+		   } else {	//중복안됨
+			   $('#label').text('등록가능한 npc입니다');
+			   $('#label').attr('style', 'color: blue')
+				namechk=true;
+		   }
+		  },
+		  error : function(error){
+				console.log("error : " + error);
+			}
+		 }); 
 	});
 
-	$('#submit').click(function(){
+	$('#register').click(function(){
 		if(namechk===true && $('#NPC_name').val()!=''){
-			$('#submit').submit();
+			$('#form1').submit();
 		}else if($('#NPC_name').val()===''){
 			$('#label').text('빈칸없이 입력해주세요');
 			$('#label').attr('style', 'color: red')

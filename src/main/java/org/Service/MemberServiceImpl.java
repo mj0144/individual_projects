@@ -14,8 +14,8 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	
-	@Autowired
-	BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	
 	public void memberJoin(MemberVO vo) throws Exception{

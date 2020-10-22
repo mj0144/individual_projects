@@ -29,6 +29,8 @@
 		<!-- Test -->
 		<junit.version>4.12</junit.version>
 		
+		<!-- tiles -->
+		<tiles.version>3.0.5</tiles.version>
 		
 		<org.aspectj-version>1.8.13</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
@@ -59,6 +61,12 @@
         <artifactId>spring-security-taglibs</artifactId>
         <version>${spring.security.version}</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
+	<dependency>
+	    <groupId>javax.annotation</groupId>
+	    <artifactId>javax.annotation-api</artifactId>
+	    <version>1.3.2</version>
+	</dependency>
 
 
 
@@ -144,7 +152,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>${spring-framework.version}</version>
 		</dependency>
 				<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 		<dependency>
@@ -159,13 +167,7 @@
 		    <version>1.3.2</version>
 		</dependency>
 
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
-				
+
 				
 				<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 <dependency>
@@ -197,15 +199,72 @@
 
 				
 				
+<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-core -->
+<dependency>
+    <groupId>org.apache.tiles</groupId>
+    <artifactId>tiles-core</artifactId>
+    <version>${tiles.version}</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-servlet -->
+<dependency>
+    <groupId>org.apache.tiles</groupId>
+    <artifactId>tiles-servlet</artifactId>
+    <version>${tiles.version}</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
+<dependency>
+    <groupId>org.apache.tiles</groupId>
+    <artifactId>tiles-jsp</artifactId>
+    <version>${tiles.version}</version>
+</dependency>
 				
+<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+<!-- <dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.8.5</version>
+</dependency> -->
+	<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+ 
 				
+<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.6</version>
+</dependency>
 				
+<dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.3.1</version>
+</dependency>			
+<!-- https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib -->
+<dependency>
+    <groupId>org.imgscalr</groupId>
+    <artifactId>imgscalr-lib</artifactId>
+    <version>4.2</version>
+</dependency>
 				
-				
-				
-				
-				
-				
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.9.8</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.9.8</version>
+</dependency>
+			
 				
 				
 				

@@ -15,9 +15,11 @@ import org.VO.NpcVO;
 import org.VO.PageMakerVO;
 import org.VO.PageVO;
 import org.aspectj.lang.annotation.Aspect;
+import org.security.MemberUserDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -49,7 +51,10 @@ public class NpcController {
     public void readMember(@RequestParam("npc_num") int npc_num, 
     		@ModelAttribute("pagevo") PageVO pagevo, 
     		Model model) throws Exception {
-   	
+    	PageMakerVO maker = new PageMakerVO();
+		
+		maker.setPagevo(pagevo);
+		model.addAttribute("pageMaker", maker);
         model.addAttribute("npc", npcService.readNpc(npc_num));
     }
     
@@ -63,11 +68,11 @@ public class NpcController {
 	}
 	
 	
-	///여기서 aop 사용해서 npc_name이랑 npc_register 빈칸 있는지 확인
-	@Transactional(propagation=Propagation.REQUIRED, timeout=10)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String createMemberPost(NpcVO nvo, HttpServletRequest request, String writer) throws Exception {
-    	
+	public String createMemberPost(NpcVO nvo, HttpServletRequest request, String writer, Authentication authentication) throws Exception {
+    	MemberUserDetail userDetail = (MemberUserDetail) authentication.getPrincipal();
+    	//현재로그인한 유저의 아이디.
+    	nvo.setWriter(userDetail.getUsername());
 		//게시글 등록.
 		npcService.addNpc(nvo);
     	
@@ -89,12 +94,14 @@ public class NpcController {
     
     
     //게시글 수정
+    //url과 뷰이름이 같으므로 void
     @RequestMapping(value = "/Npc_modify", method = RequestMethod.GET)
     public void modifyMemberGet(@RequestParam("npc_num") int npc_num,
     		@ModelAttribute("pagevo") PageVO pagevo,
     		Model model) throws Exception {
     		
         model.addAttribute("npc", npcService.readNpc(npc_num)); 
+        model.addAttribute("pagevo", pagevo);
     }
     
     
@@ -137,17 +144,20 @@ public class NpcController {
 	
 	
 	@RequestMapping(value= "/NpcList", method=RequestMethod.GET)
-	public void listPage(@ModelAttribute("pagevo")PageVO pagevo, Model model, String msg) throws Exception{
+	public void listPage(@ModelAttribute("pagevo")PageVO pagevo, Model model, String msg, HttpSession session) throws Exception{
 		PageMakerVO maker = new PageMakerVO();
 			
 		maker.setPagevo(pagevo);
 		//총 게시물 갯수
 		maker.setTotalCount(npcService.countPaging(pagevo));
 		List<NpcVO> npcs = npcService.pageList(pagevo);
-		System.out.println("msg: "+msg);
+
 		model.addAttribute("npcs", npcs);
 		model.addAttribute("pageMaker", maker);
-		model.addAttribute("msg", msg);
+		model.addAttribute("member", session.getAttribute("member"));
+		if(msg != null) {
+			model.addAttribute("msg", msg);
+		}
 		
 	}
 	

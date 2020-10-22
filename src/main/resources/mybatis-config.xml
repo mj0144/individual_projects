@@ -6,6 +6,8 @@
 
 		<typeAlias type="org.VO.NpcVO" alias="npc" />
 		<typeAlias type="org.VO.MemberVO" alias="mem" />
+		<typeAlias type="org.VO.BoardVO" alias="boardVo" />
+		<typeAlias type="org.VO.PageVO" alias="pageVo" />
 	</typeAliases>
 
 

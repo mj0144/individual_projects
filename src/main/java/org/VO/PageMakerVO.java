@@ -5,7 +5,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class PageMakerVO {
 
-	private int totalCount;
+	private int totalCount; 
 	private int startPage;
 	private int endPage;
 	
@@ -14,7 +14,7 @@ public class PageMakerVO {
 	
 	private int displayPageNum = 5; //한번에 보일 페이지 갯수
 	
-	private PageVO pagevo;
+	private PageVO pagevo = new PageVO();
 	
 	public void setPagevo(PageVO pagevo) {
 		this.pagevo = pagevo;
@@ -57,6 +57,13 @@ public class PageMakerVO {
 				.build();
 		return uriComponents.toUriString();
 	}
+//	public String makeQueryRest(int page) {
+//		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+//				.query(String.valueOf(page))
+//				.query(String.valueOf(pagevo.getPerPageNum()))
+//				.build();
+//		return uriComponents.toString();
+//	}
 	
 	
 	public int getTotalCount() {

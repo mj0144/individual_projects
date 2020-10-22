@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin/*")
 public class AdminController { 
 	
-	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String adminLogin() {
-		return "/admin/adminLogin";
+	@RequestMapping(value="/apply", method=RequestMethod.GET)
+	public void adminLogin() {
+		//return "/admin/apply";
 	}
 	
 	@RequestMapping("/access_denied_page")

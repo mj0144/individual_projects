@@ -43,9 +43,10 @@ public class MemberController {
 	
 	
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinMemberPost(@ModelAttribute("member") MemberVO vo) throws Exception {
+	public String joinMemberPost(@ModelAttribute("member") MemberVO vo, RedirectAttributes ra) throws Exception {
     	memberService.memberJoin(vo);	
-		return "member/Member_login";
+    	ra.addAttribute("msg", "join_complete");
+		return "redirect:/member/login";
 	}
     
     
@@ -60,47 +61,41 @@ public class MemberController {
     //로그인
     @RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGet(String msg, Model model) throws Exception {
-    	model.addAttribute("msg", msg);
+    	//model.addAttribute("msg", msg);
 
 		return "member/Member_login";
 	}
 
 	@RequestMapping(value= "/login", method=RequestMethod.POST)
-	public String login(@ModelAttribute("member") MemberVO member, 
-			HttpServletRequest requset,
-			Model model) throws Exception{
-		MemberVO memberVO = memberService.login(member);
-		HttpSession session = requset.getSession();
-
-			session.setAttribute("member", memberVO);
-			//session.setAttribute("islogin", true);  //로그인 상태.
-	    	
-			return "redirect:/npc/NpcList";
+	public void login() throws Exception{
+//		MemberVO memberVO = memberService.login(member);
+//		HttpSession session = requset.getSession();
+//
+//			session.setAttribute("member", memberVO);
+//			//session.setAttribute("islogin", true);  //로그인 상태.
+//	    	
+//			return "redirect:/npc/NpcList";
 
 	}
 	
-	@RequestMapping(value="/login/error", method=RequestMethod.GET)
-	public String loginError() {
-		//model.addAttribute("result", "fail");
-		return "redirect:/member/login"; //앞에 '/'빠지면 안돼.
-	}
+//	@RequestMapping(value="/login/error", method=RequestMethod.GET)
+//	public String loginError() {
+//		//model.addAttribute("result", "fail");
+//		return "redirect:/member/login"; //앞에 '/'빠지면 안돼.
+//	}
 	
 	
 	
 	
-	//로그아웃
-	@RequestMapping(value= "/logout", method=RequestMethod.POST)
-	public String logout(HttpServletRequest request, RedirectAttributes rt) throws Exception{
-
-/*		HttpSession session = request.getSession();
-
-		session.removeAttribute("member");
-		session.removeAttribute("islogin");*/
-		
-		rt.addAttribute("msg", "로그아웃되었습니다");
-		
-		return "redirect:/member/login";
-	}
+	//로그아웃 //security에서 던질거야
+//	@RequestMapping(value= "/logout", method=RequestMethod.GET)
+//	public String logout() throws Exception{
+//		
+//		//rt.addAttribute("msg", msg);
+//		//rt.addFlashAttribute("msg", "logout");
+//		
+//		return "redirect:/member/login";
+//	}
 	
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String readMember(@RequestParam("id") String id, Model model) throws Exception {
