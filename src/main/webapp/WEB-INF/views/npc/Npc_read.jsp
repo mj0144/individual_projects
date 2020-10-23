@@ -22,7 +22,11 @@
 <meta property="og:description" content="페이스북 공유 테스트 내용" />
  <meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/9983C83C5AFB757A18" />
 
-
+<script>
+	function shareFaceBook(linkUrl){
+		window.open('http://www.facebook.com/sharer.php?u=' + url)
+	}
+</script>
 
 
 
@@ -89,6 +93,7 @@
 
 </body>
 <script type="text/javascript">
+/*
 var url = 'https://naver.com';
 var title = '공유'; 
 var description = '네이버 공유 테스트';
@@ -105,13 +110,13 @@ if( ! $('meta[property="og:description"').attr('content') )
 	{ $('head').append( StringTool.format('<meta property="og:description" content="{0}" />', description) ); }
 if( ! $('meta[property="og:image"').attr('content') ) 
 	{ $('head').append( StringTool.format('<meta property="og:image" content="{0}" />', imgUrl) ); }
-
+*/
 
 //실제 테스트 중 실행되는 코드
 $('#share').click(function(){
-	//var linkUrl = window.location.href; 
-	var linkUrl ='https://naver.com';
-	window.open( 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(linkUrl) );
+	var linkUrl = window.location.href; 
+	//var linkUrl ='https://naver.com';
+	shareFaceBook(linkUrl);
 })
 
 

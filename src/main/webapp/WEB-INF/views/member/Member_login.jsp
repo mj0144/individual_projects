@@ -39,6 +39,20 @@
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	
 	<title>Laravel</title>
+	<meta property="og:url" content="https://naver.com" /> 
+<meta property="og:type" content="website" /> 
+<meta property="og:title" content="공유 테스트" /> 
+<meta property="og:description" content="페이스북 공유 테스트 내용" />
+ <meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/9983C83C5AFB757A18" />
+
+<script>
+	function shareFaceBook(linkUrl){
+		window.open('http://www.facebook.com/sharer.php?u=' + linkUrl)
+	}
+</script>
+	
+	
+	
 </head>
 <style>
 	.cotainer{margin-top: 100px;}
@@ -119,6 +133,9 @@
 			</div>
 		</div>
 	</div>
+	<div>
+	<input type="button" id="share" value="페이스북 공유 테스트">
+</div>
 </div>
 </body>
 
@@ -141,4 +158,13 @@
 			window.location.href = "/member/join";
 		}
   </script>
+  <script>
+  		//실제 테스트 중 실행되는 코드
+		$('#share').click(function(){
+			var linkUrl = window.location.href; 
+			//var linkUrl ='https://naver.com';
+			shareFaceBook(linkUrl);
+		})
+  </script>
+  
 </html>
